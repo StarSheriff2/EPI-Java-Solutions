@@ -20,7 +20,7 @@ problem_mapping = {
                 "total": 10000
             },
             "Java: Parity.java": {
-                "passed": 0,
+                "passed": 10000,
                 "total": 10000
             },
             "Python: parity.py": {
@@ -34,7 +34,7 @@ problem_mapping = {
                 "total": 10001
             },
             "Java: SwapBits.java": {
-                "passed": 0,
+                "passed": 10001,
                 "total": 10001
             },
             "Python: swap_bits.py": {
@@ -48,7 +48,7 @@ problem_mapping = {
                 "total": 10000
             },
             "Java: ReverseBits.java": {
-                "passed": 0,
+                "passed": 10000,
                 "total": 10000
             },
             "Python: reverse_bits.py": {
@@ -62,10 +62,10 @@ problem_mapping = {
                 "total": 10000
             },
             "Java: ClosestIntSameWeight.java": {
-                "passed": 0,
+                "passed": 10000,
                 "total": 10000
             },
-            "Python: closest_int_same_weight.py": { 
+            "Python: closest_int_same_weight.py": {
                 "passed": 0,
                 "total": 10000
             }
@@ -76,7 +76,7 @@ problem_mapping = {
                 "total": 10006
             },
             "Java: PrimitiveMultiply.java": {
-                "passed": 0,
+                "passed": 10006,
                 "total": 10006
             },
             "Python: primitive_multiply.py": {
@@ -190,7 +190,7 @@ problem_mapping = {
                 "total": 204
             },
             "Java: DutchNationalFlag.java": {
-                "passed": 0,
+                "passed": 204,
                 "total": 204
             },
             "Python: dutch_national_flag.py": {

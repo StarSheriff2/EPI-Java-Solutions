@@ -5,14 +5,50 @@ import epi.test_framework.TestFailure;
 import epi.test_framework.TimedExecutor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 public class DutchNationalFlag {
   public enum Color { RED, WHITE, BLUE }
 
   public static void dutchFlagPartition(int pivotIndex, List<Color> A) {
-    // TODO - you fill in here.
-    return;
+    Color pivotColor = A.get(pivotIndex);
+    int colorOrdinal = pivotColor.ordinal();
+    System.out.println("\nColorPivot: " + pivotColor);
+    System.out.println("Before Partition: " + Arrays.toString(A.toArray()));
+
+    int smaller = 0, equal = 0, larger = A.size();
+
+    while (equal < larger) {
+      if (A.get(equal).ordinal() < colorOrdinal) {
+        Collections.swap(A, smaller++, equal++);
+      } else if (A.get(equal).ordinal() == colorOrdinal) {
+        ++equal;
+      } else {
+        Collections.swap(A, equal, --larger);
+      }
+    }
+
+    System.out.println("Partioned: " + Arrays.toString(A.toArray()));
+
+//    int i = 0, j = A.size() - 1, k = 0;
+//
+//    while(i <= j) {
+//        if (A.get(i).ordinal() < colorOrdinal) {
+//            Collections.swap(A, i++, k++);
+//        } else if (A.get(i).ordinal() > colorOrdinal) {
+//            Collections.swap(A, i, j--);
+//        } else {
+//            i++;
+//        }
+//    }
+//    if (k < i) {
+//        while (k < i) {
+//            A.set(k++, pivotColor);
+//        }
+//    }
   }
+
   @EpiTest(testDataFile = "dutch_national_flag.tsv")
   public static void dutchFlagPartitionWrapper(TimedExecutor executor,
                                                List<Integer> A, int pivotIdx)
