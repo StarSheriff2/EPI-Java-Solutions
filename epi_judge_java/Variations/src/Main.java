@@ -45,8 +45,6 @@ public class Main {
     public enum Color { RED, WHITE, BLUE }
     static void dutchFlagPartitionSameKeysTogether(List<Color> A) {
         System.out.println("Before Partition: " + Arrays.toString(A.toArray()));
-//        Color pivotColor = A.get(pivotIndex);
-//        int colorOrdinal = pivotColor.ordinal();
 
         int bottom = 0, middle = 0, top = A.size();
 
@@ -55,6 +53,27 @@ public class Main {
                 Collections.swap(A, bottom++, middle++);
             } else if (A.get(middle).ordinal() == Color.WHITE.ordinal()) {
                 ++middle;
+            } else {
+                Collections.swap(A, middle, --top);
+            }
+        }
+
+        System.out.println("Partioned: " + Arrays.toString(A.toArray()));
+    }
+
+    public enum ColorV2 { BROWN, BLACK, YELLOW, GREEN }
+    static void dutchFlagPartitionSameKeysTogether4Values(List<ColorV2> A) {
+        System.out.println("Before Partition: " + Arrays.toString(A.toArray()));
+
+        int bottom = 0, bottomMiddle = 0, middle = 0, top = A.size();
+
+        while (middle < top) {
+            if (A.get(middle).ordinal() == ColorV2.BROWN.ordinal()) {
+                Collections.swap(A, bottom++, middle++);
+            } else if (A.get(middle).ordinal() == ColorV2.BLACK.ordinal()) {
+                Collections.swap(A, bottomMiddle++, middle++);
+            } else if (A.get(middle).ordinal() == ColorV2.YELLOW.ordinal()) {
+                middle++;
             } else {
                 Collections.swap(A, middle, --top);
             }

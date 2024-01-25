@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static Variations.src.Main.Color.*;
-import static Variations.src.Main.Color.RED;
+import static Variations.src.Main.ColorV2.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MainTest {
@@ -71,5 +71,14 @@ class MainTest {
         Main.dutchFlagPartitionSameKeysTogether(arraySource2);
         List<Main.Color> expectedPartition2 = Arrays.asList(RED, RED, RED, RED, RED, WHITE, WHITE, WHITE, BLUE, BLUE, BLUE);
         assertIterableEquals(expectedPartition2, arraySource2);
+    }
+
+    @Test
+    public void dutchFlagPartitionSameKeysTogether4Values() {
+        // Case 1
+        List<Main.ColorV2> arraySource1 = Arrays.asList(YELLOW, GREEN, GREEN, BLACK, BROWN, BROWN, BROWN, YELLOW, YELLOW, BROWN, BLACK, GREEN, GREEN);
+        Main.dutchFlagPartitionSameKeysTogether4Values(arraySource1);
+        List<Main.ColorV2> expectedPartition1 = Arrays.asList(BROWN, BROWN, BROWN, BROWN, BLACK, BLACK, YELLOW, YELLOW, YELLOW, GREEN, GREEN, GREEN, GREEN);
+        assertIterableEquals(expectedPartition1, arraySource1);
     }
 }
