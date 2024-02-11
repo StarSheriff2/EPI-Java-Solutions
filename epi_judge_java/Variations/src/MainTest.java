@@ -59,20 +59,33 @@ class MainTest {
         assertFalse(Main.isPowerOfTwo(-4));
     }
 
+    ///*    <================== Chapter 6: Arrays ==================>   *//
+
+    ///*** 5.1. Variations Dutch National Flag Partitioning ***///
+
+    // a. Reorder same keys together
+
     @Test
     public void dutchFlagPartitionSameKeysTogether() {
         // Case 1
         List<Main.Color> arraySource1 = Arrays.asList(RED, BLUE, BLUE, WHITE, RED, BLUE, WHITE);
-        Main.dutchFlagPartitionSameKeysTogether(arraySource1);
+        Main.dutchFlagPartitionSameKeysTogether(1, arraySource1);
         List<Main.Color> expectedPartition1 = Arrays.asList(RED, RED, WHITE, WHITE, BLUE, BLUE, BLUE);
         assertIterableEquals(expectedPartition1, arraySource1);
         // Case 2
         List<Main.Color> arraySource2 = Arrays.asList(RED, BLUE, BLUE, WHITE, RED, BLUE, WHITE, RED, RED, RED, WHITE);
-        Main.dutchFlagPartitionSameKeysTogether(arraySource2);
+        Main.dutchFlagPartitionSameKeysTogether(0, arraySource2);
         List<Main.Color> expectedPartition2 = Arrays.asList(RED, RED, RED, RED, RED, WHITE, WHITE, WHITE, BLUE, BLUE, BLUE);
         assertIterableEquals(expectedPartition2, arraySource2);
+
+        // Case 3
+        List<Main.Color> arraySource3 = Arrays.asList(BLUE, BLUE, WHITE, RED, BLUE, WHITE, RED, RED, RED, WHITE, RED);
+        Main.dutchFlagPartitionSameKeysTogether(2, arraySource3);
+        List<Main.Color> expectedPartition3 = Arrays.asList(RED, RED, RED, RED, RED, WHITE, WHITE, WHITE, BLUE, BLUE, BLUE);
+        assertIterableEquals(expectedPartition3, arraySource3);
     }
 
+    // b. Reorder same 4 keys together
     @Test
     public void dutchFlagPartitionSameKeysTogether4Values() {
         // Case 1
@@ -80,5 +93,44 @@ class MainTest {
         Main.dutchFlagPartitionSameKeysTogether4Values(arraySource1);
         List<Main.ColorV2> expectedPartition1 = Arrays.asList(BROWN, BROWN, BROWN, BROWN, BLACK, BLACK, YELLOW, YELLOW, YELLOW, GREEN, GREEN, GREEN, GREEN);
         assertIterableEquals(expectedPartition1, arraySource1);
+    }
+
+    ///*** 5.5. Variations Delete Duplicate ***///
+    // a. Delete key
+    @Test
+    public void deleteDuplicatesForKey() {
+        // Case 1.1
+        List<Integer> arraySource1 = Arrays.asList(2, 10, 54, 3, 5, 10, 15, 10, 1, 453);
+        List<Integer> expectedResult1 = Arrays.asList(2, 54, 3, 5, 15, 1, 453, 10, 1, 453);
+        assertEquals(7, Main.deleteDuplicatesForKey(arraySource1, 10));
+        assertIterableEquals(expectedResult1, arraySource1);
+
+        // Case 1.2
+        List<Integer> arraySource2 = Arrays.asList(4, 4, 4, 4, 4, 4);
+        List<Integer> expectedResult2 = List.of(4, 4, 4, 4, 4, 4);
+        assertEquals(0, Main.deleteDuplicatesForKey(arraySource2, 4));
+        assertIterableEquals(expectedResult2, arraySource2);
+    }
+
+    // b. X should appear min(2, m) times if X appears m times in A
+    @Test
+    public void deleteDuplicatesToMinTimes() {
+        // Case 1.1
+        List<Integer> arraySource1 =    Arrays.asList(2, 4, 8, 10, 10, 10, 10, 10, 15, 20, 21, 22, 22, 22, 23, 30, 40, 41, 41, 50, 64);
+        List<Integer> expectedResult1 = Arrays.asList(2, 4, 8, 10, 10, 15, 20, 21, 22, 22, 22, 23, 30, 40, 41, 41, 50, 64, 41, 50, 64);
+        assertEquals(18, Main.deleteDuplicatesToMinTimes(arraySource1, 5));
+        assertIterableEquals(expectedResult1, arraySource1);
+
+        // Case 1.2
+        List<Integer> arraySource2 =    Arrays.asList(2, 4, 8, 10, 10, 10, 10, 10, 15, 16, 16, 16, 16, 16, 20, 21, 22, 22, 22, 23, 30, 40, 41, 41, 50, 64);
+        List<Integer> expectedResult2 = Arrays.asList(2, 4, 8, 10, 10, 15, 16, 16, 20, 21, 22, 22, 22, 23, 30, 40, 41, 41, 50, 64, 30, 40, 41, 41, 50, 64);
+        assertEquals(20, Main.deleteDuplicatesToMinTimes(arraySource2, 5));
+        assertIterableEquals(expectedResult2, arraySource2);
+
+        // Case 1.3
+        List<Integer> arraySource3 =    Arrays.asList(2, 4, 8, 10, 10, 10, 10, 10, 15, 16, 16, 16, 16, 16, 20, 21, 22, 22, 22, 23, 30, 40, 41, 41, 50, 64);
+        List<Integer> expectedResult3 = Arrays.asList(2, 4, 8, 10, 10, 10, 10, 10, 15, 16, 16, 16, 16, 16, 20, 21, 22, 22, 22, 23, 30, 40, 41, 41, 50, 64);
+        assertEquals(26, Main.deleteDuplicatesToMinTimes(arraySource3, 1));
+        assertIterableEquals(expectedResult3, arraySource3);
     }
 }

@@ -20,9 +20,9 @@ public class DutchNationalFlag {
     int smaller = 0, equal = 0, larger = A.size();
 
     while (equal < larger) {
-      if (A.get(equal).ordinal() < colorOrdinal) {
+      if (A.get(equal).ordinal() < 1) {
         Collections.swap(A, smaller++, equal++);
-      } else if (A.get(equal).ordinal() == colorOrdinal) {
+      } else if (A.get(equal).ordinal() == 1) {
         ++equal;
       } else {
         Collections.swap(A, equal, --larger);
