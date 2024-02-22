@@ -8,61 +8,54 @@ import java.util.Collections;
 import java.util.List;
 public class ApplyPermutation {
   public static void applyPermutation(List<Integer> perm, List<Integer> A) {
-//    List<Integer> B = new ArrayList<>(A);
-//    perm: 2 0 1 3
-//    A: 0 1 2 3
-//    Final: 1 2 0 3
+    //    Optimized for memory: O(N) Space and Time complexity,
+    //    with no additional storage and no modifying of P
+//    In order to not modify P we have to mark A once it's visited
+//    This forces us to make a second pass to decode A
+//    Average running time:  123 us
+  //  Median running time:    15 us
+    for (int i = 0; i < A.size(); i++) {
+      Integer targetPerm = perm.get(i);
 
-//    Iteration 0
-//    perm[i] = 2
-//    temp = A[2] = 2
-//    A[i] = 0
-//    i = 2
-//    writes = 1;
-//    A = 0103
-//    Iteration 1
-//    perm[i] = 1
-//    temp = 1
-//    A[i] = 2
-//    i  = 1
-//    writes 2
-//    A = 0203
-//    temp = 0
-//    A = 1203
+      while (!(targetPerm.equals(i)) && A.get(i) >= 0) {
+        Collections.swap(A, i, targetPerm);
 
-    List<Integer> perm_t = new ArrayList<>(Arrays.asList(5, 0, 6, 3, 4, 1, 2));
-    List<Integer> B = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6));
-    //    perm_t: 5, 0, 6, 3, 4, 1, 2
-    //    B:      0, 1, 2, 3, 4, 5, 6
-    //    Final:  1, 5, 6, 3, 4, 0, 2
-//                1, 5, 2, 3, 4, 0, 6
-
-    System.out.println(Arrays.toString(B.toArray()));
-    int i = 0;
-    int writes = 0;
-    int temp = B.get(0);
-    while (writes < B.size()) {
-      if (perm_t.get(i) == i) {
-        i = ++writes;
-        temp = B.get(i);
-      } else {
-        int subTemp = B.get(perm_t.get(i));
-        B.set(perm_t.get(i), temp);
-        temp = subTemp;
-        i = temp;
-        writes++;
+        int encoded = A.get(targetPerm) + 1;
+        A.set(targetPerm, (-1 * encoded));
+        targetPerm = perm.get(targetPerm);
       }
 
-      System.out.println(Arrays.toString(B.toArray()));
+      if (targetPerm.equals(i)) {
+        int encoded = A.get(targetPerm) + 1;
+        A.set(targetPerm, (-1 * encoded));
+      }
     }
-//    Brute force approach
-//    List<Integer> C = new ArrayList<>(B);
+
+      A.replaceAll(integer -> -1 * integer - 1);
+
+
+//    OPtimized for memory: O(N) Space complexity with no additional storage
+//    Average running time:   81 us
+//    Median running time:    10 us
+//    System.out.println(Arrays.toString(A.toArray()));
+
+//    for (int i = 0; i < A.size(); i++) {
+//      while (!(perm.get(i).equals(i))) {
+//        Collections.swap(A, i, perm.get(i));
 //
-//    for (int i = 0; i < B.size(); i++) {
-//      B.set(perm_t.get(i), C.get(i));
+//        Collections.swap(perm, i, perm.get(i));
+//      }
+//    }
+//    System.out.println(Arrays.toString(A.toArray()));
+
+//    Memory heavy approach: O(n) space complexity because of additional array
+//    List<Integer> B = new ArrayList<>(A);
+//
+//    for (int i = 0; i < A.size(); i++) {
+//      A.set(perm.get(i), B.get(i));
 //    }
 //
-//    System.out.println(Arrays.toString(B.toArray()));
+//    System.out.println(Arrays.toString(A.toArray()));
   }
   @EpiTest(testDataFile = "apply_permutation.tsv")
   public static List<Integer> applyPermutationWrapper(List<Integer> perm,

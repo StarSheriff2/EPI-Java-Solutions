@@ -2,6 +2,7 @@ package Variations.src;
 
 import epi.DutchNationalFlag;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -100,16 +101,56 @@ public class Main {
             return 0;
         }
 
-        int j = 0;
+//        Naive apprach of O(n) time complexity
+//        int writeIndex = 0;
+//
+//        for (int i = 0; i < A.size(); i++) {
+//            if (!A.get(i).equals(key)) {
+//                A.set(writeIndex++, A.get(i));
+//            }
+//        }
+//
+//        System.out.println("A no Dups: " + Arrays.toString(A.toArray()));
+//        return writeIndex;
 
-        for (int i = 0; i < A.size(); i++) {
-            if (!A.get(i).equals(key)) {
-                A.set(j++, A.get(i));
+        int writeIndex = 0;
+        int lower = 0;
+        int upper = A.size() - 1;
+        List<Integer> searchResult = binarySearch(lower, upper, A, key);
+        int found = searchResult.get(1);
+        int lowerBound;
+        int upperBound;
+
+        if (found >= 0) {
+            lowerBound = found - 1;
+            if (A.get(lowerBound) == key) {
+                lower = searchResult.get(0) + 1;
+
+                while (lowerBound >= 0 && A.get(lowerBound) == key) {
+                    lowerBound = binarySearch(lower, lowerBound, A, key).get(1);
+                    lowerBound--;
+                }
+            }
+
+            upperBound = found + 1;
+            if (A.get(upperBound) == key) {
+                upper = searchResult.get(2) - 1;
+
+                while (upperBound < A.size() && A.get(upperBound) == key) {
+                    upperBound = binarySearch(upperBound, upper, A, key).get(2);
+                    upperBound++;
+                }
+            }
+
+            writeIndex = lowerBound;
+            for (int i = upperBound; i < A.size(); i++) {
+                A.set(++writeIndex, A.get(i));
             }
         }
 
         System.out.println("A no Dups: " + Arrays.toString(A.toArray()));
-        return j;
+        System.out.println("Found: " + found);
+        return ++writeIndex;
     }
 
     // b. X should appear min(2, m) times if X appears m times in A
@@ -119,40 +160,59 @@ public class Main {
             return 0;
         }
 
-        int writeIndex = 0;
-        int evaluatedIndex = 0;
-        int xCount = 1;
+//      Initiate index pointers for currently written index, first index position of a duplicate
+//        and counter for dupicate appearances
+        int writeIndex = 0, duplicateIndex = 0, xCount = 1;
 
 //        2, 4, 8, 10, 10, 10, 10, 10, 15, 16, 16, 16, 16, 16, 16, 20, 21, 22, 22, 22, 23, 30, 40, 41, 41, 50, 64
         for (int i = 1; i < A.size(); i++) {
-            if (!A.get(i).equals(A.get(evaluatedIndex))) {
+//            Check if A[i] is differente than prev element
+            if (!A.get(i).equals(A.get(i - 1))) {
+//                If not equal check number of appearances of element
+//                If element appears m times, move writeIndex back to the index
+//                after the initial position of the first appearance of the duplicate + 2
                 if (xCount == m && m != 1) {
-                    int temp = A.get(writeIndex);
-                    A.set(++writeIndex, temp);
-                    A.set(++writeIndex, A.get(i));
-                    evaluatedIndex++;
-                    xCount = 1;
+                    writeIndex = duplicateIndex+=2;
                 } else {
-                    int writes = 1;
-                    while (writes < xCount) {
-                        A.set((writeIndex + 1), A.get(writeIndex));
-                        writes++;
-                        writeIndex = writeIndex + 1;
-                    }
-                    if ((writeIndex + 1) < A.size()) {
-                        A.set(++writeIndex, A.get(i));
-                        xCount = 1;
-                        evaluatedIndex++;
-                    }
+//                  If not euqal to m, update index of duplicateIndex to that of ++writeIndex
+                    duplicateIndex = ++writeIndex;
                 }
+//                Write incoming integer into the next writeIndex position
+//                and restart counter
+                A.set(writeIndex, A.get(i));
+                xCount = 1;
             } else {
                 xCount++;
-                evaluatedIndex++;
+                A.set(++writeIndex, A.get(i));
             }
         }
 
         System.out.println("A with min(2, m) if x appears m times: " + Arrays.toString(A.toArray()));
         return ++writeIndex;
+    }
+
+
+
+    //    Auxiliary methods
+    private static List<Integer> binarySearch(int lower, int upper, List<Integer> arr, int find) {
+        int mid;
+        int found = -1;
+
+        while (lower <= upper) {
+            mid = (lower + upper)/2;
+
+            if (arr.get(mid) == find) {
+                found = mid;
+                break;
+            }
+            if (arr.get(mid) < find) {
+                upper = mid - 1;
+            } else {
+                lower = mid + 1;
+            }
+        }
+
+        return new ArrayList<>(Arrays.asList(lower, found, upper));
     }
 }
 

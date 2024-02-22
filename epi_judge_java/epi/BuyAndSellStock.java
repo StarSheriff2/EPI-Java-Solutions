@@ -7,7 +7,7 @@ public class BuyAndSellStock {
   @EpiTest(testDataFile = "buy_and_sell_stock.tsv")
   public static double computeMaxProfit(List<Double> prices) {
 //    (310, 315, 275, 295, 260, 270, 290, 230, 255,250)
-//
+//    brute -force approach O(n^2)
 //    double maxProfit = 0;
 
 //    for (int i = 0; i < prices.size(); i++) {
@@ -24,6 +24,7 @@ public class BuyAndSellStock {
 //    return maxProfit;
 
     //    (310, 315, 275, 295, 260, 270, 290, 230, 255,250)
+//    optimized O(n) space and time complexity
     if (prices.isEmpty()) {
       return 0;
     }

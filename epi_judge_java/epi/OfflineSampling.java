@@ -4,14 +4,42 @@ import epi.test_framework.GenericTest;
 import epi.test_framework.RandomSequenceChecker;
 import epi.test_framework.TimedExecutor;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+
 public class OfflineSampling {
   public static void randomSampling(int k, List<Integer> A) {
-    // TODO - you fill in here.
-    return;
+  //    O(k) time, O(1) space
+  //    Average running time:   81 ms
+  //    Median running time:    85 ms
+    Random rand = new Random();
+
+    for (int i = 0; i < k; i++) {
+      Collections.swap(A, i, (rand.nextInt(i, A.size())));
+    }
+
+//    or
+//    for (int i = 0; i < k; i++) {
+//      Collections.swap(A, i, rand.nextInt(A.size() - i) + i);
+//    }
+
+//    System.out.println(Arrays.toString(A.toArray()));
+//    Naive approach which doesn't totally fulfill the requirements of the question
+//    O(N) time complexity in worst case scenario when randNum equals
+//    0 and k == A.size(), effectivelu requiring a complete traversal of the array
+//    to build the sublist
+//    Average running time:  111 ms
+//    Median running time:   104 ms
+//    Random rand = new Random();
+//    int randNum = rand.nextInt(A.size() - (k - 1));
+//
+//    A.subList(randNum, randNum + k);
+
+//    List<Integer> sublist = new ArrayList<>(A.subList(randNum, randNum + k));
+//
+//    A.clear();
+//    A.addAll(sublist);
   }
+
   private static boolean randomSamplingRunner(TimedExecutor executor, int k,
                                               List<Integer> A)
       throws Exception {
