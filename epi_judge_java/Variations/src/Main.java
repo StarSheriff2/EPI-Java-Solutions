@@ -277,46 +277,29 @@ public class Main {
     //    (0,0), (1, 0), (1, - 1), (0, - 1), (-1, - 1), (-1, 0), (- 1, 1), (0,1), (1, 1), (2, 1).
     public static Point[] spiralPairs(int n) {
         Point[] pairs = new Point[n];
-
-//        d stadns for dimension
-//        ceil rounds up the number
-        int d = (int) Math.ceil(Math.sqrt(n));
-        List<List<Integer>> squareMatrix = new ArrayList<>();
-        for (int i = 0; i < d; i++) {
-            squareMatrix.add(new ArrayList<>(Collections.nCopies(d, 0)));
-        }
-
         final Integer[][] SHIFT = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
         int dir = 0;
-//        identify starting indices x and y in squareArray by dividing d by 2,
-//        plus remainder if its odd n number and subtracting 1
-        int offset = ((d / 2) + (d % 2)) - 1;
-//        This is how we convert back to the initial 0 in a cartesian x and y plane
-        int conversionOffset = offset;
-//        The initial offset is where we start the spiral
-        int x = offset;
-        int y = offset;
+//        The initial boundary is 1
+        int boundary = 1;
+        int x = 0;
+        int y = 0;
 
         for(int i = 0; i < n; i++) {
-            squareMatrix.get(y).set(x, (i + 1));
 //            we compute a and b by subtracting the conversionOffset from x and y, and
 //            in the case of y, the y axis is the inversion of the value of y, so we multiply
 //            it by -1
-            pairs[i] = new Point((x - conversionOffset), (-1 * (y - conversionOffset)));
-            int nextX = x + SHIFT[dir][0], nextY = y + SHIFT[dir][1];
-//            we need to cancel out the extra one if its an even n value
-            int sideLen = d - offset + ((d % 2) - 1);
-
-            if (nextX > sideLen || nextY > sideLen || nextX < offset - 1
-                    || nextY < offset - 1 || squareMatrix.get(nextY).get(nextX) != 0) {
+            pairs[i] = new Point(x, y);
+            int nextX = x + SHIFT[dir][0], nextY = y + (-1 * SHIFT[dir][1]);
+            if (nextX > boundary || nextY > boundary || nextX < (-boundary) || nextY < (-boundary)) {
                 dir = (dir + 1) % 4;
 //                Everytime we do a full circle, we need to expand our
-//                current spiral direction limit
+//                boundary
                 if (dir == 0) {
-                    --offset;
+                    ++boundary;
                 }
+
                 nextX = x + SHIFT[dir][0];
-                nextY = y + SHIFT[dir][1];
+                nextY = y + (-1 * SHIFT[dir][1]);
             }
 
             x = nextX;
