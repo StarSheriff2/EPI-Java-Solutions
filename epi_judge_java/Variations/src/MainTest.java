@@ -2,6 +2,9 @@ package Variations.src;
 
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,7 +18,7 @@ class MainTest {
     void main() {
     }
 
-// Parity Variations
+    // Parity Variations
     // 1)
     @Test
     public void testPropagateRightMostSetbit() {
@@ -122,21 +125,163 @@ class MainTest {
     @Test
     public void deleteDuplicatesToMinTimes() {
         // Case 1.1
-        List<Integer> arraySource1 =    Arrays.asList(2, 4, 8, 10, 10, 10, 10, 10, 15, 20, 21, 22, 22, 22, 23, 30, 40, 41, 41, 50, 64);
+        List<Integer> arraySource1 = Arrays.asList(2, 4, 8, 10, 10, 10, 10, 10, 15, 20, 21, 22, 22, 22, 23, 30, 40, 41, 41, 50, 64);
         List<Integer> expectedResult1 = Arrays.asList(2, 4, 8, 10, 10, 15, 20, 21, 22, 22, 22, 23, 30, 40, 41, 41, 50, 64, 41, 50, 64);
         assertEquals(18, Main.deleteDuplicatesToMinTimes(arraySource1, 5));
         assertIterableEquals(expectedResult1, arraySource1);
 
         // Case 1.2
-        List<Integer> arraySource2 =    Arrays.asList(2, 4, 8, 10, 10, 10, 10, 10, 15, 16, 16, 16, 16, 16, 20, 21, 22, 22, 22, 23, 30, 40, 41, 41, 50, 64);
+        List<Integer> arraySource2 = Arrays.asList(2, 4, 8, 10, 10, 10, 10, 10, 15, 16, 16, 16, 16, 16, 20, 21, 22, 22, 22, 23, 30, 40, 41, 41, 50, 64);
         List<Integer> expectedResult2 = Arrays.asList(2, 4, 8, 10, 10, 15, 16, 16, 20, 21, 22, 22, 22, 23, 30, 40, 41, 41, 50, 64, 30, 40, 41, 41, 50, 64);
         assertEquals(20, Main.deleteDuplicatesToMinTimes(arraySource2, 5));
         assertIterableEquals(expectedResult2, arraySource2);
 
         // Case 1.3
-        List<Integer> arraySource3 =    Arrays.asList(2, 4, 8, 10, 10, 10, 10, 10, 15, 16, 16, 16, 16, 16, 20, 21, 22, 22, 22, 23, 30, 40, 41, 41, 50, 64);
+        List<Integer> arraySource3 = Arrays.asList(2, 4, 8, 10, 10, 10, 10, 10, 15, 16, 16, 16, 16, 16, 20, 21, 22, 22, 22, 23, 30, 40, 41, 41, 50, 64);
         List<Integer> expectedResult3 = Arrays.asList(2, 4, 8, 10, 10, 10, 10, 10, 15, 16, 16, 16, 16, 16, 20, 21, 22, 22, 22, 23, 30, 40, 41, 41, 50, 64);
         assertEquals(26, Main.deleteDuplicatesToMinTimes(arraySource3, 1));
         assertIterableEquals(expectedResult3, arraySource3);
+    }
+
+    ///*** 5.18. Variations MatricInSpiralOrder ***///
+    // a. Given d, write a program to generatea d x d 2D array
+    @Test
+    public void generateSpiralingSquareMatrix() {
+        // Case 1.1
+        List<List<Integer>> expectedResult = new ArrayList<>(
+                Arrays.asList(
+                        Arrays.asList(1, 2, 3, 4),
+                        Arrays.asList(12,13, 14, 5),
+                        Arrays.asList(11, 16, 15, 6),
+                        Arrays.asList(10, 9, 8, 7)
+                )
+        );
+
+        assertEquals(expectedResult, Main.generateSpiralingSquareMatrix(4));
+
+        // Case 1.2
+        List<List<Integer>> expectedResult2 = new ArrayList<>(
+                Arrays.asList(
+                        Arrays.asList(1, 2, 3),
+                        Arrays.asList(8,9, 4),
+                        Arrays.asList(7, 6, 5)
+                )
+        );
+
+        assertEquals(expectedResult2, Main.generateSpiralingSquareMatrix(3));
+
+        // Case 1.3
+        List<List<Integer>> expectedResult3 = new ArrayList<>(
+                List.of(
+                        List.of(1)
+                )
+        );
+
+        assertEquals(expectedResult3, Main.generateSpiralingSquareMatrix(1));
+
+        // Case 1.4
+        List<List<Integer>> expectedResult4 = new ArrayList<>(
+                Arrays.asList(
+                        Arrays.asList(1, 2, 3, 4, 5, 6),
+                        Arrays.asList(20, 21, 22, 23, 24, 7),
+                        Arrays.asList(19, 32, 33, 34, 25, 8),
+                        Arrays.asList(18, 31, 36, 35, 26, 9),
+                        Arrays.asList(17, 30, 29, 28, 27, 10),
+                        Arrays.asList(16, 15, 14, 13, 12, 11)
+                )
+        );
+
+        assertEquals(expectedResult4, Main.generateSpiralingSquareMatrix(6));
+
+        // Case 1.5
+        List<List<Integer>> expectedResult5 = new ArrayList<>(
+                Arrays.asList(
+                        Arrays.asList(1, 2, 3, 4, 5, 6, 7),
+                        Arrays.asList(24, 25, 26, 27, 28, 29, 8),
+                        Arrays.asList(23, 40, 41, 42, 43, 30, 9),
+                        Arrays.asList(22, 39, 48, 49, 44, 31, 10),
+                        Arrays.asList(21, 38, 47, 46, 45, 32, 11),
+                        Arrays.asList(20, 37, 36, 35, 34, 33, 12),
+                        Arrays.asList(19, 18, 17, 16, 15, 14, 13)
+                )
+        );
+
+        assertEquals(expectedResult5, Main.generateSpiralingSquareMatrix(7));
+    }
+
+    // b. Given a sequence of P, write a program to generate
+    //    a 2d array A whose spiral order is P
+    @Test
+    public void generateSquareMatrixFromSequence() {
+        // Case 2.1
+        List<List<Integer>> expectedResult = new ArrayList<>(
+                Arrays.asList(
+                        Arrays.asList(1, 2, 3),
+                        Arrays.asList(8, 9, 4),
+                        Arrays.asList(7, 6, 5)
+                )
+        );
+
+        assertEquals(expectedResult, Main.generateSquareMatrixFromSequence(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9)));
+
+        // Case 2.2
+        List<List<Integer>> expectedResult2 = new ArrayList<>(
+                Arrays.asList(
+                        Arrays.asList(1, 2),
+                        Arrays.asList(4, 3)
+                )
+        );
+
+        assertEquals(expectedResult2, Main.generateSquareMatrixFromSequence(Arrays.asList(1, 2, 3, 4)));
+
+        // Case 2.3
+        List<List<Integer>> expectedResult3 = new ArrayList<>(
+                List.of(
+                        List.of(1)
+                )
+        );
+
+        assertEquals(expectedResult3, Main.generateSquareMatrixFromSequence(List.of(1)));
+
+        // Case 2.4
+        List<List<Integer>> expectedResult4 = new ArrayList<>(
+                Arrays.asList(
+                        Arrays.asList(9 , 5, 3, 4),
+                        Arrays.asList(30, 13, 54, 8),
+                        Arrays.asList(10, 33, 21, 1),
+                        Arrays.asList(6, 7, 34, 23)
+                )
+        );
+
+        assertEquals(expectedResult4, Main.generateSquareMatrixFromSequence(Arrays.asList(9, 5, 3, 4, 8, 1, 23, 34, 7, 6, 10, 30, 13, 54, 21, 33)));
+    }
+
+    // c. Variant: Enumerate the first n pairs of integers (a, b) in spiral order,
+    //    starting from (0,0) followed by (1,0). For example, if n = 10, your output should be
+    //    (0,0), (1, 0), (1, - 1), (0, - 1), (-1, - 1), (-1, 0), (- 1, 1), (0,1), (1, 1), (2, 1).
+    @Test
+    public void spiralPairs() {
+        // Case 3.1
+        Point[] expectedResult = {new Point(0, 0), new Point(1, 0),
+                new Point(1, -1), new Point(0, -1),
+                new Point(-1, -1), new Point(-1, 0),
+                new Point(-1, 1), new Point(0, 1),
+                new Point(1, 1), new Point(2, 1)};
+
+        assertIterableEquals(Arrays.asList(expectedResult), Arrays.asList(Main.spiralPairs(10)));
+
+        // Case 3.2
+        Point[] expectedResult2 = {new Point(0, 0), new Point(1, 0),
+                new Point(1, -1), new Point(0, -1),
+                new Point(-1, -1), new Point(-1, 0),
+                new Point(-1, 1), new Point(0, 1),
+                new Point(1, 1), new Point(2, 1),
+                new Point(2, 0), new Point(2, -1),
+                new Point(2, -2), new Point(1, -2),
+                new Point(0, -2), new Point(-1, -2),
+                new Point(-2, -2), new Point(-2, -1),
+                new Point(-2, 0), new Point(-2, 1)};
+
+        assertIterableEquals(Arrays.asList(expectedResult2), Arrays.asList(Main.spiralPairs(20)));
     }
 }

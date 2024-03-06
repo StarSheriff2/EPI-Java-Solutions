@@ -2,6 +2,7 @@ package Variations.src;
 
 import epi.DutchNationalFlag;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -191,7 +192,139 @@ public class Main {
         return ++writeIndex;
     }
 
+    ///*** 5.18. Variations MatricInSpiralOrder ***///
+    // a. Given d, write a program to generatea d x d 2D array
+    public static List<List<Integer>> generateSpiralingSquareMatrix(int d) {
+        List<List<Integer>> squareMatrix = new ArrayList<>();
+        for (int i = 0; i < d; i++) {
+            squareMatrix.add(new ArrayList<>(Collections.nCopies(d, 0)));
+        }
 
+        int nextInt = 1;
+
+        for (int offset = 0; offset < Math.ceil(d * 0.5); ++offset) {
+            nextInt = clockwiseArrayPass(offset, nextInt, squareMatrix);
+        }
+
+        return squareMatrix;
+    }
+
+    private static int clockwiseArrayPass(int offset, int nextInt, List<List<Integer>> squareMatrix) {
+        int len = squareMatrix.size() - 1 - offset;
+
+//        Here we are at the center of the squareMatrix
+        if (offset == len) {
+            squareMatrix.get(offset).set(offset, nextInt);
+            return nextInt;
+        }
+
+        // Right move
+        for (int y = offset; y < len; ++y) {
+            squareMatrix.get(offset).set(y, nextInt++);
+        }
+
+        // Down move
+        for (int x = offset; x < len; ++x) {
+            squareMatrix.get(x).set(len, nextInt++);
+        }
+
+        // Back move
+        for (int y = len; y > offset; --y) {
+            squareMatrix.get(len).set(y, nextInt++);
+        }
+
+        // Up move
+        for (int x = len; x > offset; --x) {
+            squareMatrix.get(x).set(offset, nextInt++);
+        }
+
+        return nextInt;
+    }
+
+    // b. Given a sequence of P, write a program to generate
+    //    a 2d array A whose spiral order is P
+    public static List<List<Integer>> generateSquareMatrixFromSequence(List<Integer> P) {
+        int sideLen = (int) Math.sqrt(P.size());
+
+        List<List<Integer>> squareMatrix = new ArrayList<>();
+        for (int i = 0; i < sideLen; i++) {
+            squareMatrix.add(new ArrayList<>(Collections.nCopies(sideLen, 0)));
+        }
+
+        final int[][] SHIFT = { {0, 1}, { 1, 0 }, { 0, -1 }, { -1, 0 }};
+        int dir = 0, x = 0, y = 0;
+
+        for (Integer integer : P) {
+            squareMatrix.get(x).set(y, integer);
+            int nextX = x + (SHIFT[dir][0]), nextY = y + (SHIFT[dir][1]);
+
+            if (nextX == sideLen || nextY == sideLen || nextX < 0 || nextY < 0 ||
+                    squareMatrix.get(nextX).get(nextY) != 0) {
+                dir = (dir + 1) % 4;
+                nextX = x + (SHIFT[dir][0]);
+                nextY = y + (SHIFT[dir][1]);
+            }
+
+            x = nextX;
+            y = nextY;
+        }
+
+        return squareMatrix;
+    }
+
+    // c. Variant: Enumerate the first n pairs of integers (a, b) in spiral order,
+    //    starting from (0,0) followed by (1,0). For example, if n = 10, your output should be
+    //    (0,0), (1, 0), (1, - 1), (0, - 1), (-1, - 1), (-1, 0), (- 1, 1), (0,1), (1, 1), (2, 1).
+    public static Point[] spiralPairs(int n) {
+        Point[] pairs = new Point[n];
+
+//        d stadns for dimension
+//        ceil rounds up the number
+        int d = (int) Math.ceil(Math.sqrt(n));
+        List<List<Integer>> squareMatrix = new ArrayList<>();
+        for (int i = 0; i < d; i++) {
+            squareMatrix.add(new ArrayList<>(Collections.nCopies(d, 0)));
+        }
+
+        final Integer[][] SHIFT = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
+        int dir = 0;
+//        identify starting indices x and y in squareArray by dividing d by 2,
+//        plus remainder if its odd n number and subtracting 1
+        int offset = ((d / 2) + (d % 2)) - 1;
+//        This is how we convert back to the initial 0 in a cartesian x and y plane
+        int conversionOffset = offset;
+//        The initial offset is where we start the spiral
+        int x = offset;
+        int y = offset;
+
+        for(int i = 0; i < n; i++) {
+            squareMatrix.get(y).set(x, (i + 1));
+//            we compute a and b by subtracting the conversionOffset from x and y, and
+//            in the case of y, the y axis is the inversion of the value of y, so we multiply
+//            it by -1
+            pairs[i] = new Point((x - conversionOffset), (-1 * (y - conversionOffset)));
+            int nextX = x + SHIFT[dir][0], nextY = y + SHIFT[dir][1];
+//            we need to cancel out the extra one if its an even n value
+            int sideLen = d - offset + ((d % 2) - 1);
+
+            if (nextX > sideLen || nextY > sideLen || nextX < offset - 1
+                    || nextY < offset - 1 || squareMatrix.get(nextY).get(nextX) != 0) {
+                dir = (dir + 1) % 4;
+//                Everytime we do a full circle, we need to expand our
+//                current spiral direction limit
+                if (dir == 0) {
+                    --offset;
+                }
+                nextX = x + SHIFT[dir][0];
+                nextY = y + SHIFT[dir][1];
+            }
+
+            x = nextX;
+            y = nextY;
+        }
+
+        return pairs;
+    }
 
     //    Auxiliary methods
     private static List<Integer> binarySearch(int lower, int upper, List<Integer> arr, int find) {
