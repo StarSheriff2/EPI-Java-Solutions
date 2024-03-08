@@ -309,6 +309,38 @@ public class Main {
         return pairs;
     }
 
+    // d. Variant: Compute the spiral order for an m x n 2D array A
+    public static List<Integer> rectangleSpiralOrder(List<List<Integer>> rectangleMatrix) {
+        if (rectangleMatrix.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        int m = rectangleMatrix.size(), n = rectangleMatrix.get(0).size();
+
+        List<Integer> spiralOrder = new ArrayList<>();
+
+        final int[][] SHIFT = {{0, 1}, { 1, 0}, { 0, -1 }, { -1, 0}};
+        int dir = 0, x = 0, y = 0;
+
+        for (int i = 0; i < (m * n); i++) {
+            spiralOrder.add(rectangleMatrix.get(x).get(y));
+            rectangleMatrix.get(x).set(y, 0);
+            int nextX = x + SHIFT[dir][0], nextY = y + SHIFT[dir][1];
+
+            if (nextX >= m || nextX < 0 || nextY >= n || nextY < 0
+                || rectangleMatrix.get(nextX).get(nextY) == 0) {
+                dir = (dir + 1) % 4;
+                nextX = x + SHIFT[dir][0];
+                nextY = y + SHIFT[dir][1];
+            }
+
+            x =nextX;
+            y = nextY;
+        }
+
+        return spiralOrder;
+    }
+
     //    Auxiliary methods
     private static List<Integer> binarySearch(int lower, int upper, List<Integer> arr, int find) {
         int mid;

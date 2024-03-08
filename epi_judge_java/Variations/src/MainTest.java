@@ -284,4 +284,35 @@ class MainTest {
 
         assertIterableEquals(Arrays.asList(expectedResult2), Arrays.asList(Main.spiralPairs(20)));
     }
+
+    // d. Variant: Compute the spiral order for an m x n 2D array A
+    @Test
+    public void rectangleSpiralOrder() {
+        // Case 4.1
+        List<List<Integer>> inputMatrix = new ArrayList<>(
+                Arrays.asList(
+                        Arrays.asList(1, 2, 3, 4),
+                        Arrays.asList(10, 11, 12, 5),
+                        Arrays.asList(9, 8, 7, 6)
+                )
+        );
+
+        List<Integer> expectedResult = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
+
+        assertEquals(expectedResult, Main.rectangleSpiralOrder(inputMatrix));
+
+        // Case 4.2
+        List<List<Integer>> inputMatrix2 = new ArrayList<>(
+                Arrays.asList(
+                        Arrays.asList(1, 4, 9, 10, 8),
+                        Arrays.asList(14, 11, 12, 3, 10),
+                        Arrays.asList(23, 18, 2, 21, 26)
+                )
+        );
+
+        List<Integer> expectedResult2 = Arrays.asList(1, 4, 9, 10, 8, 10, 26, 21, 2, 18, 23, 14, 11, 12, 3);
+
+        assertEquals(expectedResult2, Main.rectangleSpiralOrder(inputMatrix2));
+
+    }
 }
