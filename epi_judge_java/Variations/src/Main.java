@@ -1,6 +1,8 @@
 package Variations.src;
 
+import epi.DoublyListNode;
 import epi.DutchNationalFlag;
+import epi.ListNode;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -341,6 +343,71 @@ public class Main {
         return spiralOrder;
     }
 
+    ///*    <================== Chapter 7: LinkedLists ==================>   *//
+
+    ///*** 7.1. Merge Two Sorted Lists (pg. 92) ***///
+
+    //    a. Variant 2: Doubly Linked List
+    public static DoublyListNodeImpl<Integer> mergeTwoSortedDoublyLists(DoublyListNodeImpl<Integer> L1,
+                                                                         DoublyListNodeImpl<Integer> L2) {
+
+        DoublyListNodeImpl<Integer> mergedLists = new DoublyListNodeImpl<>(null,null, null);
+        DoublyListNodeImpl<Integer> currNode = mergedLists;
+
+        while(L1 != null && L2 != null) {
+            if (L1.data <= L2.data) {
+                currNode.next = L1;
+                L1 = L1.next;
+            } else {
+                currNode.next = L2;
+                L2 = L2.next;
+            }
+
+            currNode.next.prev = currNode;
+            currNode = currNode.next;
+        }
+
+        if (L1 != null) {
+            currNode.next = L1;
+        } else if (L2 != null) {
+            currNode.next = L2;
+        }
+
+        currNode.next.prev = currNode;
+        return mergedLists.next;
+    }
+
+    ///*** 7.2. Reverse a Single Sublist (pg. 93) ***///
+
+    //    a. Variant 1: Reverse a singly-list
+    public static ListNode<Integer> reverseSinglyList(ListNode<Integer> L) {
+//        ListNode<Integer> dummyHead = new ListNode<>(0, L);
+//        ListNode<Integer> nodeIter = dummyHead.next;
+//        int len = L.size();
+//
+//        int k = 1;
+//        while (k++ < len) {
+//            ListNode<Integer> temp = nodeIter.next;
+//            nodeIter.next = temp.next;
+//            temp.next = dummyHead.next;
+//            dummyHead.next = temp;
+//        }
+//
+//        return dummyHead.next;
+//    ListNode<Integer> dummyHead = new ListNode<>(null, L);
+        ListNode<Integer> current = L;
+        ListNode<Integer> prev = null;
+
+        while (current != null) {
+            ListNode<Integer> next_node = current.next;
+            current.next = prev;
+            prev = current;
+            current = next_node;
+        }
+
+        return prev;
+    }
+
     //    Auxiliary methods
     private static List<Integer> binarySearch(int lower, int upper, List<Integer> arr, int find) {
         int mid;
@@ -361,6 +428,44 @@ public class Main {
         }
 
         return new ArrayList<>(Arrays.asList(lower, found, upper));
+    }
+}
+
+class DoublyListNodeImpl<T> {
+    public T data;
+    DoublyListNodeImpl<T> prev, next;
+
+    DoublyListNodeImpl(T data, DoublyListNodeImpl<T> prev, DoublyListNodeImpl<T> next) {
+        this.data = data;
+        this.prev = prev;
+        this.next = next;
+    }
+
+    public void populateFromArrayList(List<T> arrayList) {
+        DoublyListNodeImpl<T> current = this;
+
+        if (arrayList.size() == 0) {
+            return;
+        } else {
+            current.data = arrayList.get(0);
+        }
+
+        for (int i = 1; i < arrayList.size(); i++) {
+            DoublyListNodeImpl<T> temp = current;
+            current.next = new DoublyListNodeImpl(arrayList.get(i), temp, null);
+            current = current.next;
+        }
+    }
+
+    public String toString() {
+        String result = "{ prev: " + (prev != null ? prev.data : null) +
+                        ", data: " + data +
+                        ", next: " + (next != null ? next.data : null) + "}, ";
+//        result += "data: " + data + ", ";
+        if (next != null) {
+            result += next.toString();
+        }
+        return result;
     }
 }
 

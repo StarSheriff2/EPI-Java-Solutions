@@ -5,12 +5,59 @@ import epi.test_framework.TestFailure;
 public class StringIntegerInterconversion {
 
   public static String intToString(int x) {
-    // TODO - you fill in here.
-    return "0";
+//    O(N)
+//Average running time:    1 us
+//Median running time:     1 us
+    long power = 10;
+    int polarize = 1;
+
+    if (x < 0) {
+      polarize = -1;
+    }
+
+    int nextDigit = (int) (polarize * (x % power));
+
+    StringBuilder slug = new StringBuilder();
+    slug.append((char) ('0' + nextDigit));
+    nextDigit = (int) (polarize * ((x / power) % power));
+
+    while ((x / power) != 0) {
+      slug.append((char) ('0' + nextDigit));
+      power *= 10;
+      nextDigit = (int) (polarize * ((x / power) % 10));
+    }
+
+    if (polarize < 0) {
+      return slug.append('-').reverse().toString();
+    }
+
+    return slug.reverse().toString();
   }
   public static int stringToInt(String s) {
-    // TODO - you fill in here.
-    return 0;
+    if (s.equals("0")) {
+      return 0;
+    }
+
+    int power = 1;
+    int integer = 0;
+
+    for (int i = s.length() - 1; i >= 0; --i) {
+      String nextString = String.valueOf(s.charAt(i));
+      if (nextString.equals("+")) {
+        break;
+      } else if (nextString.equals("-")) {
+        integer *= -1;
+        break;
+      } else {
+        int nextInt = s.charAt(i) - '0';
+        int nextDigit = nextInt * power;
+        integer += nextDigit;
+      }
+
+      power *= 10;
+    }
+
+    return integer;
   }
   @EpiTest(testDataFile = "string_integer_interconversion.tsv")
   public static void wrapper(int x, String s) throws TestFailure {

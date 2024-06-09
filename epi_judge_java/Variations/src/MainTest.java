@@ -1,9 +1,9 @@
 package Variations.src;
 
+import epi.ListNode;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -314,5 +314,74 @@ class MainTest {
 
         assertEquals(expectedResult2, Main.rectangleSpiralOrder(inputMatrix2));
 
+    }
+
+    ///*    <================== Chapter 7: LinkedLists ==================>   *//
+
+    ///*** 7.1. Variations SortedListsMerge ***///
+
+    // a. Do same problem with doubly linked list
+    @Test
+    public void SortedListsMergeDoubly() {
+        // Case 1.1
+
+        List<Integer> listAArr = Arrays.asList(1, 2, 3, 4);
+        List<Integer> listBArr = Arrays.asList(4, 8, 10);
+        List<Integer> expectedResultArr = Arrays.asList(1, 2, 3, 4, 4, 8, 10);
+
+        DoublyListNodeImpl<Integer> listA = new DoublyListNodeImpl<>(0, null, null);
+        DoublyListNodeImpl<Integer> listB = new DoublyListNodeImpl<>(0, null, null);
+        DoublyListNodeImpl<Integer> expectedResult = new DoublyListNodeImpl<>(0, null, null);
+        listA.populateFromArrayList(listAArr);
+        listB.populateFromArrayList(listBArr);
+        expectedResult.populateFromArrayList(expectedResultArr);
+
+        assertEquals(expectedResult.toString(), Main.mergeTwoSortedDoublyLists(listA, listB).toString());
+
+        // Case 1.2
+        List<Integer> listCArr = Arrays.asList(-13, -9, -1, 0, 10, 30, 500);
+        List<Integer> listDArr = Arrays.asList(-11, -5, 0, 10, 11, 18, 30, 100, 104);
+        List<Integer> expectedResultArr2 = Arrays.asList(-13, -11, -9, -5, -1, 0, 0, 10, 10, 11, 18, 30, 30, 100, 104, 500);
+
+        DoublyListNodeImpl<Integer> listC = new DoublyListNodeImpl<>(0, null, null);
+        DoublyListNodeImpl<Integer> listD = new DoublyListNodeImpl<>(0, null, null);
+        DoublyListNodeImpl<Integer> expectedResult2 = new DoublyListNodeImpl<>(0, null, null);
+        listC.populateFromArrayList(listCArr);
+        listD.populateFromArrayList(listDArr);
+        expectedResult2.populateFromArrayList(expectedResultArr2);
+
+        assertEquals(expectedResult2.toString(), Main.mergeTwoSortedDoublyLists(listC, listD).toString());
+    }
+
+    ///*** 7.2. Variations: Reverse a Single Sublist (pg. 93) ***///
+
+    // a. Reverse a singly list
+    @Test
+    public void ReverseSinglyList() {
+        // Case 1.1
+
+        List<Integer> listArr = Arrays.asList(11, 3, 5, 7, 2);
+        List<Integer> expectedResultArr = Arrays.asList(2, 7, 5, 3, 11);
+
+        ListNode<Integer> list = new ListNode<>(0, null);
+        ListNode<Integer> expectedResult = new ListNode<>(0, null);
+        list.populateFromArrayList(listArr);
+        expectedResult.populateFromArrayList(expectedResultArr);
+
+        assertEquals(expectedResult.toString(), Main.reverseSinglyList(list).toString());
+
+        // Case 1.2
+//        List<Integer> listCArr = Arrays.asList(-13, -9, -1, 0, 10, 30, 500);
+//        List<Integer> listDArr = Arrays.asList(-11, -5, 0, 10, 11, 18, 30, 100, 104);
+//        List<Integer> expectedResultArr2 = Arrays.asList(-13, -11, -9, -5, -1, 0, 0, 10, 10, 11, 18, 30, 30, 100, 104, 500);
+//
+//        DoublyListNodeImpl<Integer> listC = new DoublyListNodeImpl<>(0, null, null);
+//        DoublyListNodeImpl<Integer> listD = new DoublyListNodeImpl<>(0, null, null);
+//        DoublyListNodeImpl<Integer> expectedResult2 = new DoublyListNodeImpl<>(0, null, null);
+//        listC.populateFromArrayList(listCArr);
+//        listD.populateFromArrayList(listDArr);
+//        expectedResult2.populateFromArrayList(expectedResultArr2);
+//
+//        assertEquals(expectedResult2.toString(), Main.mergeTwoSortedDoublyLists(listC, listD).toString());
     }
 }

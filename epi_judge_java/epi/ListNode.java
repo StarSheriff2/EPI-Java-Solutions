@@ -25,6 +25,22 @@ public class ListNode<T> {
     return result;
   }
 
+  public void populateFromArrayList(List<T> arrayList) {
+    ListNode<T> current = this;
+
+    if (arrayList.isEmpty()) {
+      return;
+    } else {
+      current.data = arrayList.get(0);
+    }
+
+    for (int i = 1; i < arrayList.size(); i++) {
+      ListNode<T> temp = current;
+      current.next = new ListNode<>(arrayList.get(i), null);
+      current = current.next;
+    }
+  }
+
   @Override
   public String toString() {
     StringBuilder result = new StringBuilder();

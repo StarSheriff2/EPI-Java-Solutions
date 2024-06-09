@@ -3,11 +3,68 @@ import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
 import epi.test_framework.TimedExecutor;
+
+import java.util.List;
+
 public class IsListCyclic {
 
   public static ListNode<Integer> hasCycle(ListNode<Integer> head) {
-    // TODO - you fill in here.
+    ListNode<Integer> fast = head, slow = head;
+
+    while (fast.next != null && fast.next.next != null) {
+      slow = slow.next;
+      fast = fast.next.next;
+
+      if (slow == fast) {
+//        int cycleLen = 0;
+//        do {
+//          fast = fast.next;
+//          cycleLen++;
+//        } while (slow != fast);
+
+//        ListNode<Integer> advancedCycleIter = head;
+//        while (cycleLen-- > 0) {
+//          advancedCycleIter = advancedCycleIter.next;
+//        }
+
+//        ListNode<Integer> iter = head;
+//        while (iter != advancedCycleIter) {
+//          advancedCycleIter = advancedCycleIter.next;
+//          iter = iter.next;
+//        }
+
+        slow = head;
+        while (slow != fast) {
+          slow = slow.next;
+          fast = fast.next;
+        }
+
+        return slow;
+
+//        return iter;
+      }
+    }
+
     return null;
+
+//    TC is O(n) wcs; SC is O(n) because I make a copy of the original
+//    list
+
+//    ListNode<Integer> paintedList = new ListNode<>(0, head);
+//    ListNode<Integer> originalCurrent = head;
+//    ListNode<Integer> paintedListCurr = paintedList.next;
+//
+//    while (paintedListCurr != null && paintedListCurr.data != null) {
+//      originalCurrent = originalCurrent.next;
+//      paintedListCurr.data = null;
+//      paintedListCurr = paintedListCurr.next;
+//    }
+//
+//    if (paintedListCurr != null) {
+//      return originalCurrent;
+//    }
+//
+//    return null;
   }
   @EpiTest(testDataFile = "is_list_cyclic.tsv")
   public static void HasCycleWrapper(TimedExecutor executor,
