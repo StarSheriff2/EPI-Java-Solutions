@@ -892,7 +892,7 @@ problem_mapping = {
                 "total": 108
             },
             "Java: EvaluateRpn.java": {
-                "passed": 0,
+                "passed": 108,
                 "total": 108
             },
             "Python: evaluate_rpn.py": {
@@ -1006,7 +1006,7 @@ problem_mapping = {
                 "total": 3852
             },
             "Java: IsTreeBalanced.java": {
-                "passed": 0,
+                "passed": 3852,
                 "total": 3852
             },
             "Python: is_tree_balanced.py": {

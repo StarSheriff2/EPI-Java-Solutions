@@ -1,5 +1,6 @@
 package Variations.src;
 
+import epi.BinaryTreeNode;
 import epi.ListNode;
 import org.junit.jupiter.api.Test;
 
@@ -369,19 +370,27 @@ class MainTest {
         expectedResult.populateFromArrayList(expectedResultArr);
 
         assertEquals(expectedResult.toString(), Main.reverseSinglyList(list).toString());
+    }
+
+    ///*    <================== Chapter 8: Stacks ==================>   *//
+
+    ///*** 8.2. Variations Evaluate RPN ***///
+
+    // a. Do same problem with Polish notation
+
+    @Test
+    public void EvaluatePn() {
+        // Case 1.1
+
+        String expression = "+,9,9";
+
+
+        assertEquals(18, Main.evaluatePn(expression));
 
         // Case 1.2
-//        List<Integer> listCArr = Arrays.asList(-13, -9, -1, 0, 10, 30, 500);
-//        List<Integer> listDArr = Arrays.asList(-11, -5, 0, 10, 11, 18, 30, 100, 104);
-//        List<Integer> expectedResultArr2 = Arrays.asList(-13, -11, -9, -5, -1, 0, 0, 10, 10, 11, 18, 30, 30, 100, 104, 500);
-//
-//        DoublyListNodeImpl<Integer> listC = new DoublyListNodeImpl<>(0, null, null);
-//        DoublyListNodeImpl<Integer> listD = new DoublyListNodeImpl<>(0, null, null);
-//        DoublyListNodeImpl<Integer> expectedResult2 = new DoublyListNodeImpl<>(0, null, null);
-//        listC.populateFromArrayList(listCArr);
-//        listD.populateFromArrayList(listDArr);
-//        expectedResult2.populateFromArrayList(expectedResultArr2);
-//
-//        assertEquals(expectedResult2.toString(), Main.mergeTwoSortedDoublyLists(listC, listD).toString());
+
+        String expression2 = "*,+,3,4,-,5,2";
+
+        assertEquals(21, Main.evaluatePn(expression2));
     }
 }

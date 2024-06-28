@@ -1,13 +1,9 @@
 package Variations.src;
 
-import epi.DoublyListNode;
-import epi.DutchNationalFlag;
-import epi.ListNode;
+import epi.*;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.*;
 import java.util.List;
 
 public class Main {
@@ -194,7 +190,7 @@ public class Main {
         return ++writeIndex;
     }
 
-    ///*** 5.18. Variations MatricInSpiralOrder ***///
+    ///*** 5.18. Variations MatrixInSpiralOrder ***///
     // a. Given d, write a program to generatea d x d 2D array
     public static List<List<Integer>> generateSpiralingSquareMatrix(int d) {
         List<List<Integer>> squareMatrix = new ArrayList<>();
@@ -406,6 +402,283 @@ public class Main {
         }
 
         return prev;
+    }
+
+    ///*    <================== Chapter 8: LinkedLists ==================>   *//
+
+    ///*** 8.2. Variations Evaluate RPN ***///
+
+    //    a. Variant 1: Do same problem with Polish notation
+
+    public static int evaluatePn(String expression) {
+        StringBuilder numString = new StringBuilder();
+        Deque<Object> inputs = new ArrayDeque<>();
+        boolean isNegative = false;
+
+        int i = 0;
+        while (i < expression.length()) {
+            char nextChar = expression.charAt(i);
+            if (nextChar == '-' && (i + 1) < expression.length() && expression.charAt(i + 1) != ',') {
+                isNegative = true;
+            } else if (Character.isDigit(nextChar) && (i + 1) != expression.length()) {
+                numString.append(expression.charAt(i));
+            } else if (!Character.isDigit(nextChar) && nextChar != ',') {
+                inputs.addFirst(nextChar);
+            } else if ((nextChar == ',') && !numString.isEmpty()) {
+                if (inputs.peekFirst() instanceof Character) {
+                    int num = Integer.parseInt(numString.toString());
+                    inputs.addFirst(isNegative ? -1 * num : num);
+                    isNegative = false;
+                    numString.setLength(0);
+                } else {
+                    int b = Integer.parseInt(numString.toString());
+                    b = isNegative ? -1 * b : b;
+                    isNegative = false;
+                    numString.setLength(0);
+                    int a = (int) inputs.removeFirst();
+                    char operator = (char) inputs.removeFirst();
+                    inputs.addFirst(performOperation(a, b, operator));
+                }
+            } else if (Character.isDigit(nextChar)) {
+                int b = nextChar - '0';
+                int a = (int) inputs.removeFirst();
+                char operator = (char) inputs.removeFirst();
+                boolean isEmpty = inputs.isEmpty();
+                inputs.addFirst(performOperation(a, b, operator));
+
+                if (!isEmpty && (i + 1) == expression.length()) {
+                    b = (int) inputs.removeFirst();
+                    a = (int) inputs.removeFirst();
+                    operator = (char) inputs.removeFirst();
+                    inputs.addFirst(performOperation(a, b, operator));
+                }
+            }
+
+            i++;
+        }
+
+        return inputs.isEmpty() ? Integer.parseInt(numString.toString()) : (int) inputs.peekFirst();
+    }
+
+    public static Integer performOperation(int a, int b, char o) {
+        switch (o) {
+            case '+' -> {
+                return a + b;
+            }
+            case '-' -> {
+                return a - b;
+            }
+            case '*' -> {
+                return a * b;
+            }
+            default -> {
+                return a / b;
+            }
+        }
+    }
+
+    ///*** 8.6. Variations Compute Binary Tree
+    // Nodes in Order of Increasing Depth ***///
+
+    // a. Variant 1:
+    //    Variant: Write a program which takes
+    //    as input a binary tree and returns the keys in top down,
+    //    alternating left-to-right and right-to-left order,
+    //    starting from left-to-right. pg. 118
+
+//    Solution:
+
+//    Bascially the same as solution for normal order, except, here we
+//    alternate between left to right iteration and right to left iteration
+//    for the nodeArr array.
+//    We can simply create a boolean variable to alternate betweem both directions
+//    Something like this:
+public static List<List<Integer>>
+binaryTreeDepthFirstWithAlternateOrder(BinaryTreeNode<Integer> tree) {
+    List<List<Integer>> result = new ArrayList<>();
+
+    if (tree == null) {
+        return result;
+    }
+
+    boolean leftToRight = true;
+
+    List<BinaryTreeNode<Integer>> nodeArr = List.of(tree);
+    while (!nodeArr.isEmpty()) {
+        result.add(nodeArr.stream()
+                .map(node -> node.data)
+                .toList());
+        nodeArr = new ArrayList<>(nodeArr.stream()
+                .map(node -> Arrays.asList(node.left, node.right))
+                .flatMap(List::stream)
+                .filter(Objects::nonNull)
+                .toList());
+
+        if (!leftToRight) {
+            Collections.reverse(nodeArr);
+        }
+
+        leftToRight = !leftToRight;
+    }
+
+    return result;
+}
+
+// b. Variant 2
+//
+//    Variant: Write a program which takes as input a binary tree and returns
+//    the keys in a bottom up, left-to-right order. For example, if the input
+//    is the tree in Figure 10.1 on Page 148, your program should return
+//    ((641), (17,401, 257), (28,0,3, 1, 28), (271, 561, 2, 271), (6, 6), (314)).
+
+//    Solution
+//  For this solution, we'll use a Stack instead of an array to store the
+//    sequence of values.
+//    So, once we're done traversing the BT, we deque values from result into our final
+//    array answer
+
+    public static List<List<Integer>>
+    binaryTreeDepthOrderBottomUp(BinaryTreeNode<Integer> tree) {
+        Deque<List<Integer>> result = new ArrayDeque<>();
+
+        if (tree == null) {
+            return new ArrayList<>();
+        }
+
+        List<BinaryTreeNode<Integer>> nodeArr = List.of(tree);
+        while (!nodeArr.isEmpty()) {
+            result.addFirst(nodeArr.stream()
+                    .map(node -> node.data)
+                    .toList());
+            nodeArr = new ArrayList<>(nodeArr.stream()
+                    .map(node -> Arrays.asList(node.left, node.right))
+                    .flatMap(List::stream)
+                    .filter(Objects::nonNull)
+                    .toList());
+        }
+
+        List<List<Integer>> bottomUpOrder = new ArrayList<>();
+
+        while(!result.isEmpty()) {
+            bottomUpOrder.add(result.removeFirst());
+        }
+
+        return bottomUpOrder;
+    }
+
+//    Variant 3
+//
+//    Variant: Variant: Write a program which takes as input a
+//    binary tree with integer keys, and returns the average
+//    of the keys at each level. For example, if the input is
+//    the tree in Figure 10.1 on Page 148, your program should
+//    return (314,6, 276.25, 12, 225, 641).
+
+//    Solution
+//  For this solution, I would keep a counter for the number of nodes per depth,
+//  by multuplying depth times 2, and then reducing each row and diving by this
+//    value to get the avergae
+
+    ///*    <================== Chapter 7: LinkedLists ==================>   *//
+
+    ///*** 9.1. Variations Test if a Binary Tree is Height-balanced pg. 125  ***///
+
+    // a. Variant 1: Write a program that returns the size of the
+    // largest subtree that is complete pg. 127
+
+    public static int largestCompleteTree(BinaryTreeNode<Integer> tree) {
+        return findLargestCompleteSubtree(tree).size;
+    }
+
+    private static CompletenessStatusWithHeight findLargestCompleteSubtree(BinaryTreeNode<Integer> tree) {
+        if (tree == null) {
+            return new CompletenessStatusWithHeight(true, -1, 0, 0);
+        }
+
+        CompletenessStatusWithHeight leftSubtree = findLargestCompleteSubtree(tree.left);
+        CompletenessStatusWithHeight rightSubtree = findLargestCompleteSubtree(tree.right);
+
+        boolean complete = false;
+        int size = (leftSubtree.size + rightSubtree.size) + 1;
+
+        // Check if the current subtree is complete
+
+        int height = Math.max(leftSubtree.height, rightSubtree.height) + 1;
+        if ((leftSubtree.complete && rightSubtree.complete &&
+                leftSubtree.height == rightSubtree.height) ||
+                (leftSubtree.complete && rightSubtree.complete &&
+                        leftSubtree.height == rightSubtree.height + 1)) {
+            complete = true;
+        }
+        int largestCompleteSize = complete ?
+                size :
+                Math.max(leftSubtree.largestCompleteSize, rightSubtree.largestCompleteSize);
+
+        return new CompletenessStatusWithHeight(complete, height, size, largestCompleteSize);
+    }
+
+    private static class CompletenessStatusWithHeight {
+        public boolean complete;
+        public int height;
+        public int size;
+        public int largestCompleteSize;
+
+        public CompletenessStatusWithHeight(boolean complete, int height, int size, int largestCompleteSize){
+            this.complete = complete;
+            this.height = height;
+            this.size = size;
+            this.largestCompleteSize = largestCompleteSize;
+        }
+    }
+
+    // b. Variant 2:
+    //      Define a node in a binary tree to be k-balanced if the difference in the number
+    // of nodes in its left and right subtrees is no more than k. Design an algorithm that
+    // takes as input a binary tree and positive integer k, and returns a node in the binary
+    // tree such that the node is not k-balanced, but all of its descendants are k-balanced.
+
+    public static BinaryTreeNode<Integer> notKBalanced(BinaryTreeNode<Integer> tree, int k) {
+        return checkKBalanced(tree, k).node;
+    }
+
+    private static KBalancedWithSize checkKBalanced(BinaryTreeNode<Integer> tree, int k) {
+        if (tree == null) {
+            return new KBalancedWithSize(true, 0, null);
+        }
+
+        KBalancedWithSize leftSubtree = checkKBalanced(tree.left, k);
+        if (leftSubtree.node != null) {
+            return leftSubtree; // Return early if a non-k-balanced node is found
+        }
+
+        KBalancedWithSize rightSubtree = checkKBalanced(tree.right, k);
+        if (rightSubtree.node != null) {
+            return rightSubtree; // Return early if a non-k-balanced node is found
+        }
+
+//        There might be scenarios where the left subtree has more nodes than
+//        the right one; in which case, we need the abs difference
+        boolean isKBalanced = Math.abs(leftSubtree.size - rightSubtree.size) <= k;
+        int size = leftSubtree.size + rightSubtree.size + 1;
+
+        if (!isKBalanced) {
+            return new KBalancedWithSize(false, size, tree);
+        } else {
+//            We don't need to return the node if the tree is k-Balanced
+            return new KBalancedWithSize(true, size, null);
+        }
+    }
+
+    private static class KBalancedWithSize {
+        public boolean isKBalanced;
+        public int size;
+        public BinaryTreeNode<Integer> node;
+
+        public KBalancedWithSize(boolean isKBalanced, int size, BinaryTreeNode<Integer> node){
+            this.isKBalanced = isKBalanced;
+            this.size = size;
+            this.node = node;
+        }
     }
 
     //    Auxiliary methods
