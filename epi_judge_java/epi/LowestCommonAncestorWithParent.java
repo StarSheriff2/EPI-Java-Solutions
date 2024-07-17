@@ -8,8 +8,41 @@ public class LowestCommonAncestorWithParent {
 
   public static BinaryTree<Integer> lca(BinaryTree<Integer> node0,
                                         BinaryTree<Integer> node1) {
-    // TODO - you fill in here.
-    return null;
+//    Get each nodes depth
+    int depthN0 = getDepth(node0), depthN1 = getDepth(node1);
+
+//   Get both nodes to the place where both are at the same depth
+    while (depthN0 < depthN1) {
+      node1 = node1.parent;
+      depthN1--;
+    }
+    while (depthN1 < depthN0) {
+      node0 = node0.parent;
+      depthN0--;
+    }
+
+    // Move up the search path for both nodes in tandem
+    while (node0 != node1) {
+      node1 = node1.parent;
+      node0 = node0.parent;
+    }
+
+    return node0;
+  }
+
+  public static int getDepth(BinaryTree<Integer> node) {
+    if (node == null) {
+      return 0;
+    }
+
+    int depth = 0;
+    BinaryTree<Integer> current = node;
+    while (current.parent != null) {
+      current = current.parent;
+      depth++;
+    }
+
+    return depth;
   }
   @EpiTest(testDataFile = "lowest_common_ancestor.tsv")
   public static int lcaWrapper(TimedExecutor executor, BinaryTree<Integer> tree,

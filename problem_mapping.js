@@ -1048,7 +1048,7 @@ problem_mapping = {
                 "total": 948
             },
             "Java: LowestCommonAncestorWithParent.java": {
-                "passed": 0,
+                "passed": 948,
                 "total": 948
             },
             "Python: lowest_common_ancestor_with_parent.py": {
@@ -1218,7 +1218,7 @@ problem_mapping = {
                 "total": 152
             },
             "Java: SortedArraysMerge.java": {
-                "passed": 0,
+                "passed": 152,
                 "total": 152
             },
             "Python: sorted_arrays_merge.py": {
@@ -1260,7 +1260,7 @@ problem_mapping = {
                 "total": 51
             },
             "Java: KClosestStars.java": {
-                "passed": 0,
+                "passed": 51,
                 "total": 51
             },
             "Python: k_closest_stars.py": {
