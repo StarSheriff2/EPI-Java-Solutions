@@ -7,6 +7,9 @@ import epi.test_framework.GenericTest;
 
 import java.util.*;
 import java.util.function.BiPredicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public class KClosestStars {
   @EpiUserType(ctorParams = {double.class, double.class, double.class})
 
@@ -33,31 +36,23 @@ public class KClosestStars {
   }
 
   public static List<Star> findClosestKStars(Iterator<Star> stars, int k) {
-
-//    # Space and Time complexity is O(N)
+    // Space complexity is K and Time is N log k
     PriorityQueue<Star> maxHeap = new PriorityQueue<>(
-            k + 1,
+            k,
             (x, y) -> y.compareTo(x)
     );
-
-    while (maxHeap.size() < k && stars.hasNext()) {
-      maxHeap.add(stars.next());
-    }
 
     while (stars.hasNext()) {
       maxHeap.add(stars.next());
 
       if (maxHeap.size() > k) {
-        maxHeap.poll();
+        maxHeap.remove();
       }
     }
 
-    List<Star> closestStars = new ArrayList<>();
-    while (closestStars.size() < k) {
-      closestStars.add(maxHeap.poll());
-    }
-
-    return closestStars;
+    return Stream.generate(maxHeap::remove)
+            .limit(maxHeap.size())
+            .collect(Collectors.toList());
   }
   @EpiTest(testDataFile = "k_closest_stars.tsv")
   public static List<Star> findClosestKStarsWrapper(List<Star> stars, int k) {

@@ -1304,7 +1304,7 @@ problem_mapping = {
                 "total": 314
             },
             "Java: SearchFirstKey.java": {
-                "passed": 0,
+                "passed": 1,
                 "total": 314
             },
             "Python: search_first_key.py": {
@@ -1346,7 +1346,7 @@ problem_mapping = {
                 "total": 2000
             },
             "Java: IntSquareRoot.java": {
-                "passed": 0,
+                "passed": 2000,
                 "total": 2000
             },
             "Python: int_square_root.py": {

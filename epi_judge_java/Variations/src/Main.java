@@ -5,6 +5,8 @@ import epi.*;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
@@ -579,7 +581,7 @@ binaryTreeDepthFirstWithAlternateOrder(BinaryTreeNode<Integer> tree) {
 //  by multuplying depth times 2, and then reducing each row and diving by this
 //    value to get the avergae
 
-    ///*    <================== Chapter 7: LinkedLists ==================>   *//
+    ///*    <================== Chapter 7: Binary Trees ==================>   *//
 
     ///*** 9.1. Variations Test if a Binary Tree is Height-balanced pg. 125  ***///
 
@@ -681,6 +683,57 @@ binaryTreeDepthFirstWithAlternateOrder(BinaryTreeNode<Integer> tree) {
         }
     }
 
+    ///*    <================== Chapter 10: Heaps ==================>   *//
+
+    ///*** 10.4. Variations pg. 153  ***///
+
+    // a. Variant 1: Prin kth element read up to that point p. 153
+
+    public static void printKthLargest(Iterator<Integer> input, int k) {
+        // Space complexity is K and Time is N log k
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>(
+                k,
+                Integer::compare
+        );
+
+        while (input.hasNext()) {
+            minHeap.add(input.next());
+
+            if (minHeap.size() > k) {
+                minHeap.remove();
+            }
+
+            if (minHeap.size() == k) {
+                System.out.println(minHeap.peek());
+            }
+        }
+    }
+
+    ///*    <================== Chapter 11: Searching ==================>   *//
+
+    ///*** 10.1. Variations pg. 161  ***///
+
+    // a. Variant 1: Design an efficient algorithm that takes a sorted array and a key, and finds
+    // the index of the first occurrence of an element greater than that key. p. 161
+
+    public static int searchFirstOfGreaterThanK(List<Integer> A, int k) {
+        int result = -1;
+        int l = 0, u = A.size() - 1;
+
+        while (l <= u) {
+            int m = l + ((u - l)/2);
+
+            if (A.get(m) <= k) {
+                l = m + 1;
+            } else {
+                result = m;
+                u = m - 1;
+            }
+        }
+
+        return result;
+    }
+
     //    Auxiliary methods
     private static List<Integer> binarySearch(int lower, int upper, List<Integer> arr, int find) {
         int mid;
@@ -703,6 +756,8 @@ binaryTreeDepthFirstWithAlternateOrder(BinaryTreeNode<Integer> tree) {
         return new ArrayList<>(Arrays.asList(lower, found, upper));
     }
 }
+
+// Auxiliary classes
 
 class DoublyListNodeImpl<T> {
     public T data;
