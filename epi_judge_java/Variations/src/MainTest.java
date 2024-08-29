@@ -393,4 +393,22 @@ class MainTest {
 
         assertEquals(21, Main.evaluatePn(expression2));
     }
+
+    ///*    <================== Chapter 12: HashTables ==================>   *//
+
+    ///*** 12. Variations Bootcamp pg. 179 ***///
+
+    @Test
+    public void FindAnagrams() {
+        // Case 1.1
+
+        List<String> dictionary = Arrays.asList("debitcard", "elvis", "silent", "badcredit",
+                "lives", "freedom", "listen", "levis", "money");
+        List<List<String>> expectedResultArr = Arrays.asList(Arrays.asList("debitcard", "badcredit"),
+                Arrays.asList("silent", "listen"), Arrays.asList("elvis", "lives", "levis"));
+
+
+        assertEquals(expectedResultArr, Main.findAnagrams(dictionary));
+
+    }
 }

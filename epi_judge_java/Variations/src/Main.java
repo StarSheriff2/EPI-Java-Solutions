@@ -5,6 +5,7 @@ import epi.*;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -711,7 +712,7 @@ binaryTreeDepthFirstWithAlternateOrder(BinaryTreeNode<Integer> tree) {
 
     ///*    <================== Chapter 11: Searching ==================>   *//
 
-    ///*** 10.1. Variations pg. 161  ***///
+    ///*** 11.1. Variations pg. 161  ***///
 
     // a. Variant 1: Design an efficient algorithm that takes a sorted array and a key, and finds
     // the index of the first occurrence of an element greater than that key. p. 161
@@ -732,6 +733,33 @@ binaryTreeDepthFirstWithAlternateOrder(BinaryTreeNode<Integer> tree) {
         }
 
         return result;
+    }
+
+    ///*    <================== Chapter 12: HashMaps ==================>   *//
+
+    ///*** Bootcamp Variation pg. 179  ***///
+    // Variation:
+    // Design a program that takes as input a set of words and returns groups of anagrams
+    // for those words. Each group must contain at least two words.
+    //  Requirement: time complexity should be O(nm)
+
+    public static List<List<String>> findAnagrams(List<String> dictionary) {
+        Map<Integer, List<String>> anagramsHash = new HashMap<>();
+
+        dictionary.forEach((s) -> {
+                int hashCode = stringHash(s);
+                anagramsHash.putIfAbsent(hashCode, new ArrayList<>());
+                anagramsHash.get(hashCode).add(s);
+            }
+        );
+
+        return anagramsHash.values().stream()
+                .filter((a) -> a.size() >= 2)
+                .collect(Collectors.toList());
+    }
+
+    public static int stringHash(String s) {
+        return s.chars().reduce(1, (val, c) -> (val * c));
     }
 
     //    Auxiliary methods
