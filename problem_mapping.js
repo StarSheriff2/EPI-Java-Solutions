@@ -1360,7 +1360,7 @@ problem_mapping = {
                 "total": 11003
             },
             "Java: RealSquareRoot.java": {
-                "passed": 0,
+                "passed": 11003,
                 "total": 11003
             },
             "Python: real_square_root.py": {
@@ -1402,7 +1402,7 @@ problem_mapping = {
                 "total": 503
             },
             "Java: KthLargestInArray.java": {
-                "passed": 0,
+                "passed": 503,
                 "total": 503
             },
             "Python: kth_largest_in_array.py": {
