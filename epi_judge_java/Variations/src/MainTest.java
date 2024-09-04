@@ -404,11 +404,30 @@ class MainTest {
 
         List<String> dictionary = Arrays.asList("debitcard", "elvis", "silent", "badcredit",
                 "lives", "freedom", "listen", "levis", "money");
-        List<List<String>> expectedResultArr = Arrays.asList(Arrays.asList("debitcard", "badcredit"),
-                Arrays.asList("silent", "listen"), Arrays.asList("elvis", "lives", "levis"));
+        List<List<String>> expectedResultArr = Arrays.asList(Arrays.asList("silent", "listen"),
+                Arrays.asList("debitcard", "badcredit"), Arrays.asList("elvis", "lives", "levis"));
 
 
         assertEquals(expectedResultArr, Main.findAnagrams(dictionary));
 
+    }
+
+    ///*** 12. Hashable class example pg. 179-180 ***///
+
+    @Test
+    public void MergeContactLists() {
+        Main.ContactList contactList1 = new Main.ContactList(Arrays.asList("Alice", "Bob", "Charlie"));
+        Main.ContactList contactList2 = new Main.ContactList(Arrays.asList("David", "Eve", "Frank"));
+        Main.ContactList contactList3 = new Main.ContactList(Arrays.asList("Alice", "Charlie", "Bob")); // Same names as contactList1 but in different order
+        Main.ContactList contactList4 = new Main.ContactList(Arrays.asList("George", "Hank", "Bob"));
+
+        // Create a list of contact lists
+        List<Main.ContactList> contactLists = Arrays.asList(contactList1, contactList2, contactList3, contactList4);
+
+        // Expected Result - contactList3 should be considered duplicate of contactList1
+        List<Main.ContactList> expectedList = Arrays.asList(contactList4, contactList2, contactList1);
+
+        // Assert
+        assertEquals(expectedList, Main.mergeContactLists(contactLists));
     }
 }

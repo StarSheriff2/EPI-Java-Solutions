@@ -744,12 +744,12 @@ binaryTreeDepthFirstWithAlternateOrder(BinaryTreeNode<Integer> tree) {
     //  Requirement: time complexity should be O(nm)
 
     public static List<List<String>> findAnagrams(List<String> dictionary) {
-        Map<Integer, List<String>> anagramsHash = new HashMap<>();
+        Map<String, List<String>> anagramsHash = new HashMap<>();
 
         dictionary.forEach((s) -> {
-                int hashCode = stringHash(s);
-                anagramsHash.putIfAbsent(hashCode, new ArrayList<>());
-                anagramsHash.get(hashCode).add(s);
+                String key = stringHash(s);
+                anagramsHash.putIfAbsent(key, new ArrayList<>());
+                anagramsHash.get(key).add(s);
             }
         );
 
@@ -758,9 +758,70 @@ binaryTreeDepthFirstWithAlternateOrder(BinaryTreeNode<Integer> tree) {
                 .collect(Collectors.toList());
     }
 
-    public static int stringHash(String s) {
-        return s.chars().reduce(1, (val, c) -> (val * c));
+    public static String stringHash(String word) {
+        int[] charCounts = new int[26];
+        for (char c : word.toCharArray()) {
+            charCounts[c - 'a']++;
+        }
+
+        return Arrays.toString(charCounts);
+//        List<Integer> alphabetMatches = findInAlphabet(s);
+//
+//        String stringKey = "";
+//        for (int i = 0; i < 26; i++) {
+//            int charCount = alphabetMatches.get(i);
+//            if (charCount >= 0) {
+//                int j = 0;
+//                while (j++ < charCount) {
+//                    stringKey = stringKey.concat(Character.toString(i + 'a'));
+//                }
+//
+//            }
+//        }
+//        return stringKey;
     }
+
+    public static List<ContactList> mergeContactLists(
+    List<ContactList> contacts) {
+        return new ArrayList<>(new HashSet(contacts));
+
+    }
+
+    public static class ContactList {
+        public List<String> names;
+
+        ContactList(List<String> names) { this.names = names; }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null || !(obj instanceof ContactList)) {
+                return false;
+            }
+            return this == obj ||
+                    new HashSet(names).equals(new HashSet<>(((ContactList) obj).names));
+        }
+
+        @Override
+        public int hashCode() {
+            return new HashSet(names).hashCode();
+        }
+    }
+
+//    public static List<Integer> findInAlphabet(String s) {
+//        List<Integer> alphabetArray = new ArrayList<>(26);
+//
+//        for (int i = 0; i < 26; i++) {
+//            alphabetArray.add(i, -1);
+//        }
+//
+//        for (int i = 0; i < s.length(); i++) {
+//            int idx = s.charAt(i) - 'a';
+//            int count = Math.max(0, alphabetArray.get(idx)) + 1;
+//            alphabetArray.set(idx, count);
+//        }
+//
+//        return alphabetArray;
+//    }
 
     //    Auxiliary methods
     private static List<Integer> binarySearch(int lower, int upper, List<Integer> arr, int find) {
