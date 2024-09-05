@@ -747,9 +747,10 @@ binaryTreeDepthFirstWithAlternateOrder(BinaryTreeNode<Integer> tree) {
         Map<String, List<String>> anagramsHash = new HashMap<>();
 
         dictionary.forEach((s) -> {
-                String key = stringHash(s);
-                anagramsHash.putIfAbsent(key, new ArrayList<>());
-                anagramsHash.get(key).add(s);
+//                int code = anagramHash(s);
+                String code = stringHash(s);
+                anagramsHash.putIfAbsent(code, new ArrayList<>());
+                anagramsHash.get(code).add(s);
             }
         );
 
@@ -758,6 +759,22 @@ binaryTreeDepthFirstWithAlternateOrder(BinaryTreeNode<Integer> tree) {
                 .collect(Collectors.toList());
     }
 
+
+// The following approach generates an integer hashcode, which seems cleaner
+//    than generating a string version of an array,
+//    however, it generates the overhead of calling hashCode() on a HashMap
+//    public static int anagramHash(String s) {
+//        return s.chars()
+//                .mapToObj(c -> (char) c)
+//                .collect(Collectors.toMap(
+//                        c -> c,
+//                        c -> 1,
+//                        Integer::sum,
+//                        HashMap::new
+//                ))
+//                .hashCode();
+//    }
+
     public static String stringHash(String word) {
         int[] charCounts = new int[26];
         for (char c : word.toCharArray()) {
@@ -765,22 +782,10 @@ binaryTreeDepthFirstWithAlternateOrder(BinaryTreeNode<Integer> tree) {
         }
 
         return Arrays.toString(charCounts);
-//        List<Integer> alphabetMatches = findInAlphabet(s);
-//
-//        String stringKey = "";
-//        for (int i = 0; i < 26; i++) {
-//            int charCount = alphabetMatches.get(i);
-//            if (charCount >= 0) {
-//                int j = 0;
-//                while (j++ < charCount) {
-//                    stringKey = stringKey.concat(Character.toString(i + 'a'));
-//                }
-//
-//            }
-//        }
-//        return stringKey;
     }
 
+
+    ///*** 12. Hashable class example pg. 179-180 ***///
     public static List<ContactList> mergeContactLists(
     List<ContactList> contacts) {
         return new ArrayList<>(new HashSet(contacts));

@@ -402,13 +402,36 @@ class MainTest {
     public void FindAnagrams() {
         // Case 1.1
 
-        List<String> dictionary = Arrays.asList("debitcard", "elvis", "silent", "badcredit",
+        List<String> dictionary = Arrays.asList(
+                "debitcard", "elvis", "silent", "badcredit",
                 "lives", "freedom", "listen", "levis", "money");
-        List<List<String>> expectedResultArr = Arrays.asList(Arrays.asList("silent", "listen"),
-                Arrays.asList("debitcard", "badcredit"), Arrays.asList("elvis", "lives", "levis"));
+        List<List<String>> expectedResultArr = Arrays.asList(
+                Arrays.asList("silent", "listen"),
+                Arrays.asList("debitcard", "badcredit"),
+                Arrays.asList("elvis", "lives", "levis")
+                );
 
 
         assertEquals(expectedResultArr, Main.findAnagrams(dictionary));
+
+        //  Case 1.2
+        List<String> dictionary2 = Arrays.asList(
+                "abcde", "fghij");
+        List<List<String>> expectedResultArr2 = List.of();
+
+
+        assertEquals(expectedResultArr2, Main.findAnagrams(dictionary2));
+
+        //  Case 1.3
+        List<String> dictionary3 = Arrays.asList(
+                "abcde", "edcba", "carl", "larcs", "clars", "aabcde");
+        List<List<String>> expectedResultArr3 = List.of(
+                Arrays.asList("abcde", "edcba"),
+                Arrays.asList("larcs", "clars")
+        );
+
+
+        assertEquals(expectedResultArr3, Main.findAnagrams(dictionary3));
 
     }
 
