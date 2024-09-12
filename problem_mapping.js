@@ -1460,7 +1460,7 @@ problem_mapping = {
                 "total": 305
             },
             "Java: IsStringPermutableToPalindrome.java": {
-                "passed": 0,
+                "passed": 305,
                 "total": 305
             },
             "Python: is_string_permutable_to_palindrome.py": {
@@ -1474,7 +1474,7 @@ problem_mapping = {
                 "total": 212
             },
             "Java: IsAnonymousLetterConstructible.java": {
-                "passed": 0,
+                "passed": 212,
                 "total": 212
             },
             "Python: is_anonymous_letter_constructible.py": {
@@ -1488,7 +1488,7 @@ problem_mapping = {
                 "total": 101
             },
             "Java: LruCache.java": {
-                "passed": 0,
+                "passed": 101,
                 "total": 101
             },
             "Python: lru_cache.py": {

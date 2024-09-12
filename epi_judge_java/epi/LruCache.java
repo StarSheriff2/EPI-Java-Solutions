@@ -4,21 +4,43 @@ import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
 
-import java.util.List;
+import java.util.*;
 
 public class LruCache {
-  LruCache(final int capacity) {}
+  private final int capacity;
+  private final HashMap<Integer, Integer> cachedBooks;
+  LruCache(final int capacity) {
+    this.capacity = capacity;
+    this.cachedBooks = new LinkedHashMap<>(capacity);
+  }
+
   public Integer lookup(Integer key) {
-    // TODO - you fill in here.
-    return 0;
+    int found = this.cachedBooks.getOrDefault(key, -1);
+
+    if (found > 0) {
+      this.cachedBooks.remove(key);
+      this.cachedBooks.put(key, found);
+    }
+
+    return found;
   }
   public void insert(Integer key, Integer value) {
-    // TODO - you fill in here.
-    return;
+    if (this.cachedBooks.containsKey(key)) {
+      int prevValue = this.cachedBooks.remove(key);
+      this.cachedBooks.put(key, prevValue);
+    } else {
+      if (this.cachedBooks.size() == this.capacity) {
+        Iterator<Integer> iter = this.cachedBooks.keySet().iterator();
+
+        this.cachedBooks.remove(iter.next());
+      }
+
+      this.cachedBooks.put(key, value);
+    }
+
   }
   public Boolean erase(Object key) {
-    // TODO - you fill in here.
-    return true;
+    return this.cachedBooks.remove(key) != null;
   }
   @EpiUserType(ctorParams = {String.class, int.class, int.class})
   public static class Op {
