@@ -79,36 +79,36 @@ public class TreeFromPreorderInorder {
   //      a) if the last node has no parent, the last one becomes the left t of the current
   //    2) if the c node is less than the last one, the c node becomes the right t of the prev node
   //
-  private static void buildMaxTreeBt(List<Integer> arr, int currIdx,
-                                                        BinaryTreeNode<Integer> prevNode) {
-    if (currIdx >= arr.size()) {
-      return;
-    }
-
-    BinaryTreeNode<Integer> node = new BinaryTreeNode<>(arr.get(currIdx));
-
-    if (node.data > prevNode.data) {
-      while (prevNode.parent != null && prevNode.parent.data < node.data) {
-        prevNode = prevNode.parent;
-      }
-
-      if (prevNode.parent == null) {
-        node.left = prevNode;
-        prevNode.parent = node;
-      } else {
-        BinaryTreeNode<Integer> temp = prevNode.parent.right;
-        prevNode.parent.right = node;
-        node.parent = prevNode.parent;
-        node.left = temp;
-        temp.parent = node;
-      }
-    } else {
-      prevNode.right = node;
-      node.parent = prevNode;
-    }
-
-    buildMaxTreeBt(arr, ++currIdx, node);
-  }
+//  private static void buildMaxTreeBt(List<Integer> arr, int currIdx,
+//                                                        BinaryTreeNode<Integer> prevNode) {
+//    if (currIdx >= arr.size()) {
+//      return;
+//    }
+//
+//    BinaryTreeNode<Integer> node = new BinaryTreeNode<>(arr.get(currIdx));
+//
+//    if (node.data > prevNode.data) {
+//      while (prevNode.parent != null && prevNode.parent.data < node.data) {
+//        prevNode = prevNode.parent;
+//      }
+//
+//      if (prevNode.parent == null) {
+//        node.left = prevNode;
+//        prevNode.parent = node;
+//      } else {
+//        BinaryTreeNode<Integer> temp = prevNode.parent.right;
+//        prevNode.parent.right = node;
+//        node.parent = prevNode.parent;
+//        node.left = temp;
+//        temp.parent = node;
+//      }
+//    } else {
+//      prevNode.right = node;
+//      node.parent = prevNode;
+//    }
+//
+//    buildMaxTreeBt(arr, ++currIdx, node);
+//  }
 
 
 

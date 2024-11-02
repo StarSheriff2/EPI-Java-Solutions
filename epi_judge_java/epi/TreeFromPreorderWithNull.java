@@ -6,11 +6,32 @@ import epi.test_framework.TimedExecutor;
 import java.util.ArrayList;
 import java.util.List;
 public class TreeFromPreorderWithNull {
+  public static int currIdx;
+
   public static BinaryTreeNode<Integer>
   reconstructPreorder(List<Integer> preorder) {
-    // TODO - you fill in here.
-    return null;
+    currIdx = 0;
+    BinaryTreeNode<Integer> r = buildBinaryTree(preorder);
+    return r;
   }
+
+  private static BinaryTreeNode<Integer>
+  buildBinaryTree(List<Integer> preorder) {
+    Integer subtreeKey = preorder.get(currIdx);
+    ++currIdx;
+
+    if (subtreeKey == null) {
+      return null;
+    }
+
+    BinaryTreeNode<Integer> tree = new BinaryTreeNode<>(subtreeKey);
+
+    tree.left = buildBinaryTree(preorder);
+    tree.right = buildBinaryTree(preorder);
+
+    return tree;
+  }
+
   @EpiTest(testDataFile = "tree_from_preorder_with_null.tsv")
   public static BinaryTreeNode<Integer>
   reconstructPreorderWrapper(TimedExecutor executor, List<String> strings)
