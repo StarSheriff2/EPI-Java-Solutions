@@ -25,33 +25,22 @@ public class TreeInorder {
     List<Integer> inorderTraversalList = new ArrayList<>();
 
     BinaryTreeNode<Integer> current = tree;
-
-    while (current != null) {
+    if (current != null) {
       nodeStack.add(current);
+    }
 
-      if (current.left != null) {
-        current = current.left;
-      } else {
-        inorderTraversalList.add(nodeStack.removeLast().data);
+    while (!nodeStack.isEmpty()) {
+      if (current.left == null || current != nodeStack.peekLast()) {
+        current = nodeStack.removeLast();
+        inorderTraversalList.add(current.data);
 
         if (current.right != null) {
           current = current.right;
-        } else {
-          if (current.right == null && !nodeStack.isEmpty()) {
-            current = nodeStack.removeLast();
-            inorderTraversalList.add(current.data);
-
-            current = current.right;
-            while (current == null && !nodeStack.isEmpty()) {
-              current = nodeStack.removeLast();
-              inorderTraversalList.add(current.data);
-
-              current = current.right;
-            }
-          } else {
-            current = current.right;
-          }
+          nodeStack.add(current);
         }
+      } else {
+          current = current.left;
+          nodeStack.add(current);
       }
     }
 
