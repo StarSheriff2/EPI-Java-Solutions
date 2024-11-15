@@ -11,8 +11,11 @@ public class TreeFromPreorderWithNull {
   public static BinaryTreeNode<Integer>
   reconstructPreorder(List<Integer> preorder) {
     currIdx = 0;
-    BinaryTreeNode<Integer> r = buildBinaryTree(preorder);
-    return r;
+    return buildBinaryTree(preorder);
+
+    // Variant 1:
+    // It't the same process with the difference that
+    // we start from the last node and move backwards as we iterate
   }
 
   private static BinaryTreeNode<Integer>

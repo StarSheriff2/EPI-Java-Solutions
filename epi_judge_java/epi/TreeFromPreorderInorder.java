@@ -31,6 +31,7 @@ public class TreeFromPreorderInorder {
 //    }
 //
 //    return tree;
+//    variant 3: From Preorder and Postrder traversal
   }
 
   private static BinaryTreeNode<Integer> buildBt(List<Integer> preorderSub,
@@ -64,7 +65,7 @@ public class TreeFromPreorderInorder {
 
   // Variant 1:
   // generate tree from inorder and postorder traversal data
-  // The idea is the same, hoever, we now stat from the last item in the postorder index, which should be the root of
+  // The idea is the same, hoever, we now start from the last item in the postorder index, which should be the root
   // of the tree. The k nodes to the left of the postorder array, correspond to the
   // left subtree, and next k nodes to the right subtree
 
@@ -110,7 +111,19 @@ public class TreeFromPreorderInorder {
 //    buildMaxTreeBt(arr, ++currIdx, node);
 //  }
 
-
+//    variant 3: From Preorder and Postrder traversal
+//   - First: map all values in the pre-order sublist to their indices
+//   - Second: Set root as preOrder.get(0)
+//   - Third: Establish right subtree root node as the value at n - 2 of postOrder sublist
+//   - Fourth: a. Find the index of the right subtree root node value in the preOrder map
+//             b. Establish the left subtree as preOrder.sublist(1, rightSubtree node index) <-- exclusive
+//             c. Establish the right subtree as preOrder.sublist(rightSubtree node index, n)
+//             d. Establish the left subtree in the postOrder sublist as postOrder.sublist(0, n - rightSubtree node index)
+//             e. Establish the right subtree in the postOrder sublist as postOrder.sublist(n - rightSubtree node index, n -2)
+//  - The base case is as in the base problem:
+//          if (preorderSub.isEmpty()) {
+//            return null;
+//          }
 
   public static void main(String[] args) {
     System.exit(
