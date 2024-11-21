@@ -15,19 +15,19 @@ public class Hanoi {
   private static final int NUM_PEGS = 3;
 
   public static List<List<Integer>> computeTowerHanoi(int numRings) {
-    List<Deque<Integer>> pegs = IntStream.range(0, NUM_PEGS)
-            .mapToObj(i -> new ArrayDeque<Integer>())
-            .collect(Collectors.toList());
-
-    for (int i = 0; i < numRings; i++) {
-      pegs.get(0).add(i);
-    }
+//    List<Deque<Integer>> pegs = IntStream.range(0, NUM_PEGS)
+//            .mapToObj(i -> new ArrayDeque<Integer>())
+//            .collect(Collectors.toList());
+//
+//    for (int i = 0; i < numRings; i++) {
+//      pegs.get(0).add(i);
+//    }
 
     List<List<Integer>> result = new ArrayList<>(((int) Math.pow(2, numRings)) - 1);
 
 
 
-//    printMoves(numRings, 0, 1, 2, result);
+    printMoves(numRings, 0, 1, 2, result);
 
     return result;
   }

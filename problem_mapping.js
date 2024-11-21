@@ -1160,7 +1160,7 @@ problem_mapping = {
                 "total": 3852
             },
             "Java: TreeFromPreorderWithNull.java": {
-                "passed": 0,
+                "passed": 3852,
                 "total": 3852
             },
             "Python: tree_from_preorder_with_null.py": {
@@ -1970,7 +1970,7 @@ problem_mapping = {
                 "total": 10
             },
             "Java: Hanoi.java": {
-                "passed": 0,
+                "passed": 10,
                 "total": 10
             },
             "Python: hanoi.py": {
