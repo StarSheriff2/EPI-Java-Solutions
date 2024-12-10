@@ -51,22 +51,6 @@ public class TreeWithParentInorder {
   // Variant 1: Preorder traversal
 //  public static List<Integer> prerderTraversal(BinaryTree<Integer> tree) {
 //    //    Time O(n) and space O(1)
-//    // if curr.left == prev
-//    //      prev = curr
-//    //      if curr.right != null
-//    //        curr = curr.right
-//    //      else
-//    //        curr = curr.parent
-//    // else if curr.right == prev
-//    //    prev = curr
-//    //    curr = curr.parent
-//    // else
-//    //    Add node data to List
-//    //    prev = curr
-//    //    if left != null
-//    //        curr = left
-//    //    else
-//    //        curr = curr.parent
 //
 //    BinaryTree<Integer> curr = tree;
 //    BinaryTree<Integer> prev = null;
@@ -95,26 +79,6 @@ public class TreeWithParentInorder {
   // Note: Variant 1: Postorder traversal
   public static List<Integer> postrderTraversal(BinaryTree<Integer> tree) {
     //    Time O(n) and space O(1)
-    // if curr.left == prev
-    //      prev = curr
-    //      if curr.right != null
-    //        curr = curr.right
-    //      else
-    //        list.add current.data
-    //        curr = curr.parent
-    // else if curr.right == prev
-    //    prev = curr
-    //    list.add current.data
-    //    curr = curr.parent
-    // else
-    //    prev = curr
-    //    if left != null
-    //        curr = curr.left
-    //    else if right != null
-    //        curr = curr.right
-    //    else
-    //        list.add current.data
-    //        curr = curr.parent
 
     BinaryTree<Integer> curr = tree;
     BinaryTree<Integer> prev = null;
@@ -123,16 +87,13 @@ public class TreeWithParentInorder {
     while (curr != null) {
       BinaryTree<Integer> next;
 
-      if (curr.left == prev && curr.right != null) {
-        next = curr.right;
+      if (curr.right == prev
+              || curr.left == prev && curr.right == null
+              || curr.left == null && curr.right == null) {
+        postorderTraversal.add(curr.data);
+        next = curr.parent;
       } else {
-        if (curr.right == prev || curr.left == prev ||
-                (curr.left == null && curr.right == null)) {
-          postorderTraversal.add(curr.data);
-          next = curr.parent;
-        } else {
-          next = (curr.left == null) ? curr.right : curr.left;
-        }
+        next = (curr.left == prev || curr.left == null) ? curr.right : curr.left;
       }
 
       prev = curr;
